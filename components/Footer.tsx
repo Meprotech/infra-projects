@@ -1,0 +1,108 @@
+import Link from "next/link";
+import { HardHat, Mail, Phone, MapPin } from "lucide-react";
+import { SITE } from "@/data/site";
+import { SERVICES } from "@/data/services";
+
+export function Footer() {
+  return (
+    <footer className="relative overflow-hidden border-t border-concrete-700/60 bg-concrete-900">
+      <div className="grid-backdrop pointer-events-none absolute inset-0 opacity-40" />
+      <div className="section-shell relative grid gap-12 py-16 md:grid-cols-12">
+        {/* Brand */}
+        <div className="md:col-span-4">
+          <Link href="/#home" className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-ink">
+              <HardHat className="h-5 w-5" strokeWidth={2.2} />
+            </span>
+            <span className="font-heading text-base font-bold text-concrete-50">
+              {SITE.name}
+            </span>
+          </Link>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-concrete-400">
+            {SITE.description}
+          </p>
+        </div>
+
+        {/* Quick links */}
+        <div className="md:col-span-2">
+          <h4 className="font-heading text-sm font-semibold text-concrete-50">
+            Company
+          </h4>
+          <ul className="mt-4 space-y-2.5">
+            {SITE.nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-sm text-concrete-400 transition-colors hover:text-accent"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Services */}
+        <div className="md:col-span-3">
+          <h4 className="font-heading text-sm font-semibold text-concrete-50">
+            Services
+          </h4>
+          <ul className="mt-4 space-y-2.5">
+            {SERVICES.map((s) => (
+              <li key={s.id}>
+                <Link
+                  href="/#services"
+                  className="text-sm text-concrete-400 transition-colors hover:text-accent"
+                >
+                  {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Contact */}
+        <div className="md:col-span-3">
+          <h4 className="font-heading text-sm font-semibold text-concrete-50">
+            Contact
+          </h4>
+          <ul className="mt-4 space-y-3 text-sm text-concrete-400">
+            <li className="flex items-start gap-2.5">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+              <span>{SITE.contact.address}</span>
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Mail className="h-4 w-4 shrink-0 text-accent" />
+              <a href={`mailto:${SITE.contact.email}`} className="hover:text-accent">
+                {SITE.contact.email}
+              </a>
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Phone className="h-4 w-4 shrink-0 text-accent" />
+              <a href={`tel:${SITE.contact.phone}`} className="hover:text-accent">
+                {SITE.contact.phone}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="section-shell relative flex flex-col items-center justify-between gap-3 border-t border-concrete-700/60 py-6 text-xs text-concrete-500 sm:flex-row">
+        <p>
+          © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+        </p>
+        <div className="flex items-center gap-5">
+          {SITE.social.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              className="transition-colors hover:text-accent"
+            >
+              {s.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  );
+}

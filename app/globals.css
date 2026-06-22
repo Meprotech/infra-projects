@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Theme tokens (RGB triplets so Tailwind's <alpha-value> works) ── */
+  /* Monochrome black & white: the "accent" is near-black. To bring a colour
+     accent back, set e.g. amber: --accent: 255 138 0; --accent-soft: 255 176 64; */
+  --accent: 24 23 20;
+  --accent-soft: 51 49 44;
+  --steel: 56 124 188;
+  --grid: 90 100 112;
+
+  --marquee-duration: 40s;
+
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    @apply border-concrete-600/40;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-concrete-950 text-concrete-200 antialiased;
+    font-feature-settings: "ss01", "cv01";
+    overflow-x: hidden;
+  }
+
+  /* Respect users who ask for less motion: kill long/animated transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.9);
+    color: #f4f3ee;
+  }
+
+  /* Slim, on-theme scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1ef;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cfcfcc;
+    border-radius: 9999px;
+    border: 2px solid #f1f1ef;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b6b6b1;
+  }
+}
+
+@layer components {
+  /* Section heading eyebrow used across sections */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent;
+  }
+
+  .section-shell {
+    @apply relative mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  /* Heading text gradient for premium feel (dark ink → mid grey on light) */
+  .text-gradient {
+    @apply bg-gradient-to-br from-concrete-50 via-concrete-100 to-concrete-400 bg-clip-text text-transparent;
+  }
+
+  /* Faint blueprint grid backing for sections */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, rgb(var(--grid) / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--grid) / 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+/* Hairline utilities for blueprint motif */
+.hairline-t {
+  border-top: 1px solid rgb(var(--grid) / 0.18);
+}
+
+/* ── Lenis smooth scroll (recommended baseline styles) ── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
