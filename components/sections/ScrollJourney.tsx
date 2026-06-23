@@ -191,7 +191,9 @@ export function ScrollJourney() {
     <section
       ref={ref}
       className="relative bg-concrete-950"
-      style={{ height: mobile ? "340vh" : "420vh" }}
+      // inline position guarantees a non-static scroll container even before
+      // the CSS class loads (avoids a transient useScroll warning).
+      style={{ position: "relative", height: mobile ? "340vh" : "420vh" }}
       aria-label="How we build — project showcase"
     >
       <div className="sticky top-0 h-screen overflow-hidden border-y border-concrete-800">

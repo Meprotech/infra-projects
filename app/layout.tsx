@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { MotionProvider } from "@/components/MotionProvider";
 import { ScrollProgressBar } from "@/components/ScrollProgressBar";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { AOSInit } from "@/components/AOSInit";
 
 const heading = Space_Grotesk({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-concrete-950 font-sans">
         <MotionProvider>
+          <AOSInit />
           <SmoothScroll />
           <ScrollProgressBar />
           <Navbar />

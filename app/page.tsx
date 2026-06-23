@@ -11,15 +11,31 @@ import { CTABanner } from "@/components/sections/CTABanner";
 export default function HomePage() {
   return (
     <>
+      {/* Hero shows immediately; ScrollJourney is sticky (a transform wrapper
+          would break position:sticky) — so AOS is applied to the rest. */}
       <Hero />
-      <About />
-      <Services />
+      <div data-aos="fade-up">
+        <About />
+      </div>
+      <div data-aos="fade-up">
+        <Services />
+      </div>
       <ScrollJourney />
-      <Projects />
-      <WhyChooseUs />
-      <Presence />
-      <Clients />
-      <CTABanner />
+      <div data-aos="fade-up">
+        <Projects />
+      </div>
+      <div data-aos="fade-up">
+        <WhyChooseUs />
+      </div>
+      <div data-aos="fade-up">
+        <Presence />
+      </div>
+      <div data-aos="fade-up">
+        <Clients />
+      </div>
+      <div data-aos="fade-up">
+        <CTABanner />
+      </div>
     </>
   );
 }

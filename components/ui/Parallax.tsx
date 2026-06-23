@@ -35,8 +35,18 @@ export function Parallax({
     reduce ? [0, 0] : [distance, -distance],
   );
 
+  // useScroll needs a non-static target; mirror any positioning class inline so
+  // it's set even before CSS loads (or default to relative).
+  const position =
+    (/\b(absolute|fixed|sticky|relative)\b/.exec(className ?? "")?.[1] as
+      | "absolute"
+      | "fixed"
+      | "sticky"
+      | "relative"
+      | undefined) ?? "relative";
+
   return (
-    <motion.div ref={ref} style={{ y }} className={className}>
+    <motion.div ref={ref} style={{ y, position }} className={className}>
       {children}
     </motion.div>
   );

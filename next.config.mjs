@@ -13,8 +13,6 @@ const nextConfig = {
       },
     ],
   },
-  // three.js / r3f ship ESM that Next transpiles automatically; this keeps
-  // tree-shaking friendly without extra config.
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

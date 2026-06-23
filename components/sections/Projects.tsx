@@ -46,11 +46,11 @@ export function Projects() {
                 {filter === f && (
                   <motion.span
                     layoutId="project-filter-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-accent"
+                    className="absolute inset-0 z-0 rounded-full bg-accent"
                     transition={{ type: "spring", stiffness: 400, damping: 32 }}
                   />
                 )}
-                {f}
+                <span className="relative z-10">{f}</span>
               </button>
             ))}
           </div>

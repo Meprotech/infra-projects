@@ -1,21 +1,25 @@
 "use client";
 
+import { forwardRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, Building2 } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { EASE } from "@/lib/motion";
 
-export function ProjectCard({ project }: { project: Project }) {
-  return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.6, ease: EASE }}
-      className="group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-900"
-    >
+// forwardRef so AnimatePresence `mode="popLayout"` can measure the card.
+export const ProjectCard = forwardRef<HTMLElement, { project: Project }>(
+  function ProjectCard({ project }, ref) {
+    return (
+      <motion.article
+        ref={ref}
+        layout
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        className="group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-900"
+      >
       <div className="relative aspect-[16/11] overflow-hidden">
         {/* clip-path wipe reveal on scroll into view */}
         <motion.div
@@ -61,6 +65,7 @@ export function ProjectCard({ project }: { project: Project }) {
           <span className="font-medium">{project.client}</span>
         </div>
       </div>
-    </motion.article>
-  );
-}
+      </motion.article>
+    );
+  },
+);
