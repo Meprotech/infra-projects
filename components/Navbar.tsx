@@ -62,13 +62,13 @@ export function Navbar() {
           <button
             onClick={() => setOpen(true)}
             className={cn(
-              "group flex items-center gap-3 text-sm font-medium transition-colors hover:text-accent",
+              "group flex items-center gap-3 text-sm font-medium",
               onDark ? "text-white/90" : "text-concrete-300",
             )}
             aria-label="Open menu"
             aria-expanded={open}
           >
-            <span className="hidden sm:inline tracking-wide">Menu</span>
+            <span className="hidden tracking-wide sm:inline">Menu</span>
             <span className="flex flex-col items-end gap-[5px]">
               <span className="h-px w-6 bg-current transition-all duration-300 group-hover:w-7" />
               <span className="h-px w-4 bg-current transition-all duration-300 group-hover:w-7" />
