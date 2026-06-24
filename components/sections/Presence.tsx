@@ -33,12 +33,25 @@
  *   rotation, and a Z-pushed glass sheen.
  *   Direction flipped vs the reference: NEGATIVE rotateY tilts the plane to the
  *   RIGHT (reference's positive-Y leaned it left).
+ *
+ * "FULL 3D" PASS (interaction patterns sourced via 21st.dev/Magic MCP, then
+ *   grafted onto our real India geometry):
+ *   - Idle mouse-parallax: the resting plane tilts toward the cursor via
+ *     spring-driven rotateX/rotateY motion values (rotX/rotY). Rotation now
+ *     flows through that one channel; zoom+pan stay on the `animate` prop so
+ *     they never fight each other.
+ *   - Pin click "bend": rotX/rotY snap to the dramatic card tilt while we zoom
+ *     and pan to the pin; releasing returns to flat + cursor-follow.
+ *   - Glassmorphic info card flips up from the base showing the active office
+ *     (city / state / type), outside the zooming stage so it stays crisp.
+ *   All gated by prefers-reduced-motion (no parallax/bend/flip when set).
  * ─────────────────────────────────────────────────────────────────────────── */
 
 import {
   AnimatePresence,
   motion,
   useReducedMotion,
+  useSpring,
   type Variants,
 } from "framer-motion";
 import { Navigation, RotateCcw } from "lucide-react";
@@ -62,19 +75,21 @@ const TILT_Y = -15; // deg — negative ⇒ tilt to the RIGHT (right edge forwar
 const TILT_X = 8; // deg — top edge leans back, for the card-like corner lift
 const ZOOM_SPRING = { type: "spring", stiffness: 140, damping: 19 } as const;
 
-// Build the stage transform that centers `loc` in the container and tilts it.
-// translate % is relative to the (unscaled) element box, which equals the
-// container size — so (0.5 - pinFraction) * scale * 100 lands the pin centre.
-// (No box-shadow: an inset shadow read as a hard dark border when zoomed; the
-// tilt + glass sheen carry the depth instead.)
-function stageTransform(loc: OfficeLocation | undefined, tilt: boolean) {
-  if (!loc) return { scale: 1, x: "0%", y: "0%", rotateY: 0, rotateX: 0 };
+// Idle parallax: the resting map tilts gently toward the cursor for a "living"
+// 3D plane. Rotation is driven through springs so the idle wobble and the
+// active "bend" share one channel and never fight the zoom animation.
+const PARALLAX = 7; // deg — max idle tilt following the mouse
+const ROT_SPRING = { stiffness: 150, damping: 22, mass: 0.6 } as const;
+
+// Zoom + pan that centers `loc` in the container (rotation handled separately
+// via motion-value springs). translate % is relative to the (unscaled) element
+// box, which equals the container size.
+function stageZoom(loc: OfficeLocation | undefined) {
+  if (!loc) return { scale: 1, x: "0%", y: "0%" };
   return {
     scale: ZOOM_SCALE,
     x: `${(0.5 - loc.x / VB_W) * ZOOM_SCALE * 100}%`,
     y: `${(0.5 - loc.y / VB_H) * ZOOM_SCALE * 100}%`,
-    rotateY: tilt ? TILT_Y : 0,
-    rotateX: tilt ? TILT_X : 0,
   };
 }
 
@@ -121,6 +136,41 @@ export function Presence() {
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [activePinId]);
+
+  // 3D rotation channel (idle mouse-parallax + active "bend"), spring-smoothed.
+  const rotX = useSpring(0, ROT_SPRING);
+  const rotY = useSpring(0, ROT_SPRING);
+
+  // While a pin is active the plane holds the dramatic card-bend; otherwise it
+  // rests flat (and follows the cursor via onMouseMove below).
+  useEffect(() => {
+    if (reduce) {
+      rotX.set(0);
+      rotY.set(0);
+      return;
+    }
+    if (activePinId) {
+      rotX.set(TILT_X);
+      rotY.set(TILT_Y);
+    } else {
+      rotX.set(0);
+      rotY.set(0);
+    }
+  }, [activePinId, reduce, rotX, rotY]);
+
+  const handleParallax = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduce || activePinId || !mapRef.current) return;
+    const r = mapRef.current.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5; // -0.5 … 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    rotX.set(-py * PARALLAX * 2); // top toward cursor
+    rotY.set(px * PARALLAX * 2);
+  };
+  const handleParallaxLeave = () => {
+    if (reduce || activePinId) return;
+    rotX.set(0);
+    rotY.set(0);
+  };
 
   const hq =
     LOCATIONS.find((l) => l.type === "Head Office") ?? LOCATIONS[0];
@@ -232,6 +282,8 @@ export function Presence() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            onMouseMove={handleParallax}
+            onMouseLeave={handleParallaxLeave}
             className="map-container mx-auto overflow-hidden [perspective:850px]"
             style={
               {
@@ -247,9 +299,13 @@ export function Presence() {
             {/* Zoom/pan/tilt stage — the svg + pin overlay move together as one
                 3D plane. transformOrigin centre + perspective on the parent. */}
             <motion.div
-              className="absolute inset-0 [transform-style:preserve-3d]"
-              style={{ transformOrigin: "center center" }}
-              animate={stageTransform(activeLoc, tilt)}
+              className="absolute inset-0 [transform-style:preserve-3d] [will-change:transform]"
+              style={{
+                transformOrigin: "center center",
+                rotateX: rotX,
+                rotateY: rotY,
+              }}
+              animate={stageZoom(activeLoc)}
               transition={ZOOM_SPRING}
             >
             <svg
@@ -445,6 +501,45 @@ export function Presence() {
               animate={{ opacity: activePinId ? 1 : 0 }}
               transition={{ duration: 0.5 }}
             />
+
+            {/* glassmorphic info card — flips up from the base on pin click.
+                Lives outside the zooming stage so it stays crisp/readable. */}
+            <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-20 [perspective:600px] sm:right-auto sm:w-56">
+              <AnimatePresence>
+                {activeLoc && (
+                  <motion.div
+                    key={activeLoc.id}
+                    initial={{ opacity: 0, y: 22, rotateX: reduce ? 0 : -35 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    exit={{ opacity: 0, y: 14, rotateX: reduce ? 0 : -20 }}
+                    transition={
+                      reduce
+                        ? { duration: 0.2 }
+                        : { type: "spring", stiffness: 240, damping: 22 }
+                    }
+                    style={{ transformOrigin: "bottom center" }}
+                    className="rounded-xl border border-concrete-700/60 bg-concrete-50/90 p-3.5 shadow-[0_18px_50px_-24px_rgba(0,0,0,0.6)] backdrop-blur-md"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-xl leading-none">
+                        {TYPE_META[activeLoc.type].emoji}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate font-heading text-base font-bold text-concrete-950">
+                          {activeLoc.city}
+                        </p>
+                        <p className="truncate text-[11px] text-concrete-500">
+                          {activeLoc.state}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-2.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
+                      {activeLoc.type}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </motion.div>
         </Reveal>
       </div>

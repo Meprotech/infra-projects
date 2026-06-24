@@ -7,9 +7,9 @@ import { SERVICES } from "@/data/services";
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-concrete-700/60 bg-concrete-900">
-      <div className="section-shell relative grid gap-12 py-16 md:grid-cols-12">
+      <div className="section-shell relative grid grid-cols-2 gap-x-6 gap-y-10 py-16 md:grid-cols-12 md:gap-12">
         {/* Brand */}
-        <div className="md:col-span-4">
+        <div className="col-span-2 md:col-span-4">
           <Link href="/#home" className="inline-block">
             <Image
               src={SITE.logo.full}
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
 
         {/* Contact */}
-        <div className="md:col-span-3">
+        <div className="col-span-2 md:col-span-3">
           <h4 className="font-heading text-sm font-semibold text-concrete-50">
             Contact
           </h4>

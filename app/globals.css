@@ -118,7 +118,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.4),
       inset 0 -4px 0 rgba(0, 0, 0, 0.2),
       0 0 0 4px rgba(255, 255, 255, 0.2),
-      0 0 180px rgba(153, 23, 255, 0.55);
+      0 0 180px rgba(0, 0, 0, 0.55);
     transform: translateY(-2px);
   }
 
@@ -288,7 +288,10 @@ html.lenis body {
 
 /* While a pin is zoomed-in, suppress the CSS hover sign so it doesn't
    clash with the active-zoom state. */
-.map-cities.is-zoomed .map-city:not(.is-active):hover .map-city__label {
+/* While zoomed, hide every in-map sign — DOM text magnified inside the 3D
+   layer rasterises soft. The crisp glass info card (outside the zoom layer)
+   carries the city name instead, so the label stays perfectly sharp. */
+.map-cities.is-zoomed .map-city .map-city__label {
   display: none;
 }
 .map-city::after,
