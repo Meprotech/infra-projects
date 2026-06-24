@@ -6,10 +6,13 @@ import { motion } from "framer-motion";
 import { MapPin, Building2 } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { EASE } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 // forwardRef so AnimatePresence `mode="popLayout"` can measure the card.
-export const ProjectCard = forwardRef<HTMLElement, { project: Project }>(
-  function ProjectCard({ project }, ref) {
+export const ProjectCard = forwardRef<
+  HTMLElement,
+  { project: Project; className?: string }
+>(function ProjectCard({ project, className }, ref) {
     return (
       <motion.article
         ref={ref}
@@ -18,7 +21,10 @@ export const ProjectCard = forwardRef<HTMLElement, { project: Project }>(
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.6, ease: EASE }}
-        className="group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-900"
+        className={cn(
+          "group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-900",
+          className,
+        )}
       >
       <div className="relative aspect-square overflow-hidden sm:aspect-[16/11]">
         {/* clip-path wipe reveal on scroll into view */}

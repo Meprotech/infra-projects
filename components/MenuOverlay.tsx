@@ -43,8 +43,6 @@ export function MenuOverlay({
           transition={{ duration: 0.4, ease: EASE }}
           className="fixed inset-0 z-[80] overflow-y-auto bg-concrete-900"
         >
-          <div className="grid-backdrop pointer-events-none absolute inset-0 opacity-40" />
-
           {/* overlay header */}
           <div className="section-shell relative flex h-16 items-center justify-between md:h-20">
             <span className="flex items-center gap-2.5">

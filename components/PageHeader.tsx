@@ -1,6 +1,5 @@
 import { AnimatedText } from "@/components/ui/AnimatedText";
 import { Reveal } from "@/components/ui/Reveal";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 
 interface PageHeaderProps {
   eyebrow: string;
@@ -12,7 +11,6 @@ interface PageHeaderProps {
 export function PageHeader({ eyebrow, title, description }: PageHeaderProps) {
   return (
     <header className="relative overflow-hidden border-b border-concrete-800 bg-concrete-950 pt-32 pb-16 md:pt-40 md:pb-20">
-      <BlueprintGrid large pan />
       <div className="pointer-events-none absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-radial-fade blur-2xl" />
       <div className="section-shell relative">
         <span className="eyebrow">

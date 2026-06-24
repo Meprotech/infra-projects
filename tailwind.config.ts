@@ -44,14 +44,8 @@ const config: Config = {
         serif: ["var(--font-serif)", "Georgia", "serif"],
       },
       backgroundImage: {
-        "blueprint-grid":
-          "linear-gradient(to right, rgb(var(--grid) / 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--grid) / 0.08) 1px, transparent 1px)",
         "radial-fade":
           "radial-gradient(ellipse at center, rgb(var(--accent) / 0.12), transparent 70%)",
-      },
-      backgroundSize: {
-        grid: "48px 48px",
-        "grid-lg": "96px 96px",
       },
       boxShadow: {
         glow: "0 0 0 1px rgb(var(--accent) / 0.25), 0 12px 40px -12px rgb(var(--accent) / 0.35)",
@@ -66,10 +60,6 @@ const config: Config = {
           "0%": { transform: "scale(0.8)", opacity: "0.7" },
           "70%, 100%": { transform: "scale(2.4)", opacity: "0" },
         },
-        "grid-pan": {
-          from: { backgroundPosition: "0 0" },
-          to: { backgroundPosition: "96px 96px" },
-        },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-8px)" },
@@ -78,7 +68,6 @@ const config: Config = {
       animation: {
         "scroll-x": "scroll-x var(--marquee-duration, 40s) linear infinite",
         "pulse-ring": "pulse-ring 2.4s cubic-bezier(0.4,0,0.6,1) infinite",
-        "grid-pan": "grid-pan 8s linear infinite",
         float: "float 6s ease-in-out infinite",
       },
     },

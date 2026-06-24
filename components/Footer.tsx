@@ -7,23 +7,19 @@ import { SERVICES } from "@/data/services";
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-concrete-700/60 bg-concrete-900">
-      <div className="grid-backdrop pointer-events-none absolute inset-0 opacity-40" />
       <div className="section-shell relative grid gap-12 py-16 md:grid-cols-12">
         {/* Brand */}
         <div className="md:col-span-4">
-          <Link href="/#home" className="flex items-center gap-2.5">
-            <span className="relative h-12 w-14 shrink-0">
-              <Image
-                src={SITE.logo.mark}
-                alt=""
-                fill
-                sizes="56px"
-                className="object-contain"
-              />
-            </span>
-            <span className="font-heading text-base font-bold text-concrete-50">
-              {SITE.name}
-            </span>
+          <Link href="/#home" className="inline-block">
+            <Image
+              src={SITE.logo.full}
+              alt={SITE.name}
+              width={380}
+              height={256}
+              sizes="(max-width: 768px) 160px, 192px"
+              className="h-auto w-40 sm:w-44 md:w-48"
+              priority
+            />
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-concrete-400">
             {SITE.description}
@@ -49,10 +45,10 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Services */}
+        {/* Competencies */}
         <div className="md:col-span-3">
           <h4 className="font-heading text-sm font-semibold text-concrete-50">
-            Services
+            Competencies
           </h4>
           <ul className="mt-4 space-y-2.5">
             {SERVICES.map((s) => (

@@ -9,7 +9,6 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "framer-motion";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 
 // Real project photography from /public, shown as a scroll-driven crossfade.
 const SLIDES = [
@@ -29,7 +28,7 @@ const SLIDES = [
     src: "/3.webp",
     num: "03",
     title: "Across the region",
-    body: "Schemes that reach across districts — from headworks and intake to the last village connection.",
+    body: "Schemes that reach across districts from headworks and intake to the last village connection.",
   },
   {
     src: "/4.webp",
@@ -127,7 +126,6 @@ function Caption({
 function StaticJourney() {
   return (
     <section className="relative overflow-hidden border-y border-concrete-800 bg-concrete-950 py-24">
-      <BlueprintGrid />
       <div className="section-shell relative">
         <span className="eyebrow">
           How We Build

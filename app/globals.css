@@ -90,12 +90,49 @@
     @apply bg-gradient-to-br from-concrete-50 via-concrete-100 to-concrete-400 bg-clip-text text-transparent;
   }
 
-  /* Faint blueprint grid backing for sections */
-  .grid-backdrop {
-    background-image:
-      linear-gradient(to right, rgb(var(--grid) / 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--grid) / 0.06) 1px, transparent 1px);
-    background-size: 48px 48px;
+  /* Adapted from Uiverse.io by AlimurtuzaCodes. */
+  .conversation-button {
+    display: inline-flex;
+    width: 17rem;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 9999px;
+    background: #1c1a1c;
+    cursor: pointer;
+    transition:
+      transform 450ms ease-in-out,
+      box-shadow 450ms ease-in-out;
+  }
+
+  .conversation-button__text {
+    color: #aaaaaa;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color 450ms ease-in-out;
+  }
+
+  .conversation-button:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -4px 0 rgba(0, 0, 0, 0.2),
+      0 0 0 4px rgba(255, 255, 255, 0.2),
+      0 0 180px rgba(153, 23, 255, 0.55);
+    transform: translateY(-2px);
+  }
+
+  .conversation-button:hover .conversation-button__text {
+    color: #ffffff;
+  }
+
+  .conversation-button:active {
+    transform: translateY(0);
+  }
+
+  .conversation-button:focus-visible {
+    outline: 3px solid rgb(var(--accent) / 0.45);
+    outline-offset: 4px;
   }
 }
 
@@ -216,6 +253,43 @@ html.lenis body {
   padding: var(--city-radius);
   position: absolute;
   top: calc(var(--y) * 1% - var(--city-radius));
+  /* pins are now <button>s (click-to-zoom) — strip native chrome */
+  appearance: none;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Active (clicked) pin emphasis — pulsing ring, distinct from hover sign */
+.map-city__ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.4em;
+  height: 1.4em;
+  margin: -0.7em 0 0 -0.7em;
+  border-radius: 50%;
+  border: 0.12em solid var(--city-sign-color-back);
+  pointer-events: none;
+}
+.map-city.is-active::after {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
+  transform: translateY(0.5em) scale(1.15);
+}
+
+/* Clicked/zoomed pin keeps its city-name sign visible (hover normally shows
+   it, but hover is suppressed while zoomed — see .is-zoomed below). */
+.map-city.is-active .map-city__label {
+  display: block;
+  animation: fadein 300ms forwards ease-out;
+}
+
+/* While a pin is zoomed-in, suppress the CSS hover sign so it doesn't
+   clash with the active-zoom state. */
+.map-cities.is-zoomed .map-city:not(.is-active):hover .map-city__label {
+  display: none;
 }
 .map-city::after,
 .map-city::before {

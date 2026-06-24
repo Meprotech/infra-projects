@@ -2,14 +2,12 @@
 
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { STRENGTHS } from "@/data/strengths";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 
 export function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden border-t border-concrete-800 bg-concrete-900 py-24 md:py-32">
-      <BlueprintGrid />
       <div className="section-shell relative">
         <SectionHeading
           align="center"
@@ -25,13 +23,17 @@ export function WhyChooseUs() {
           viewport={{ once: true, amount: 0.15 }}
           className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6 lg:grid-cols-3"
         >
-          {STRENGTHS.map((s) => {
+          {STRENGTHS.map((s, index) => {
             const Icon = s.icon;
             return (
               <motion.div
                 key={s.title}
                 variants={fadeUp}
-                className="group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-950/60 p-4 transition-colors hover:border-accent/40 sm:p-7"
+                className={`group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-950/60 p-4 transition-colors hover:border-accent/40 sm:p-7 ${
+                  index === STRENGTHS.length - 1
+                    ? "col-span-2 mx-auto w-[calc(50%-0.375rem)] lg:col-span-1 lg:w-auto"
+                    : ""
+                }`}
               >
                 {/* hover accent sweep */}
                 <span className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

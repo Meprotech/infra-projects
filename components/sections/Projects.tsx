@@ -60,8 +60,12 @@ export function Projects() {
           className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-6 lg:grid-cols-3"
         >
           <AnimatePresence mode="popLayout">
-            {visible.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+            {visible.slice(0, 4).map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                className={index === 3 ? "lg:hidden" : undefined}
+              />
             ))}
           </AnimatePresence>
         </motion.div>

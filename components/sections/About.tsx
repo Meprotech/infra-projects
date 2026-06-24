@@ -6,14 +6,12 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Parallax } from "@/components/ui/Parallax";
 import { Counter } from "@/components/ui/Counter";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { STATS } from "@/data/stats";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 
 export function About() {
   return (
     <section id="about" className="relative overflow-hidden bg-concrete-950 py-24 md:py-32">
-      <BlueprintGrid />
       <div className="section-shell relative grid items-center gap-14 lg:grid-cols-2">
         {/* Visual */}
         <Reveal y={36} className="order-2 lg:order-1">
@@ -53,7 +51,7 @@ export function About() {
           <SectionHeading
             eyebrow="Who We Are"
             title="An engineering partner public bodies can *trust*."
-            description="We design and build the unseen networks that keep cities and villages running — clean water in, wastewater safely out, and farmland irrigated. As a government-approved contractor based in Gujarat, we bring disciplined execution and modern methods to public infrastructure across India."
+            description="We design and build the unseen networks that keep cities and villages running clean water in, wastewater safely out, and farmland irrigated. As a government-approved contractor based in Gujarat, we bring disciplined execution and modern methods to public infrastructure across India."
           />
 
           <motion.dl

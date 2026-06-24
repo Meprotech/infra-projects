@@ -22,11 +22,15 @@ export function Clients() {
           viewport={{ once: true, amount: 0.2 }}
           className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-700 sm:mt-14 lg:grid-cols-3"
         >
-          {CLIENTS.map((client) => (
+          {CLIENTS.map((client, index) => (
             <motion.div
               key={client.id}
               variants={fadeUp}
-              className="flex min-h-24 items-center justify-center bg-concrete-900 px-4 py-6 text-center transition-colors hover:bg-concrete-800 sm:min-h-28 sm:px-6"
+              className={`flex min-h-24 items-center justify-center bg-concrete-900 px-4 py-6 text-center transition-colors hover:bg-concrete-800 sm:min-h-28 sm:px-6 ${
+                index === CLIENTS.length - 1
+                  ? "col-span-2 mx-auto w-1/2 lg:col-span-1 lg:mx-0 lg:w-full"
+                  : ""
+              }`}
             >
               <span className="font-heading text-sm font-semibold text-concrete-100 sm:text-base">
                 {client.label}

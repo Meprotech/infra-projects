@@ -5,7 +5,6 @@ import { Check } from "lucide-react";
 import { SERVICES, type Service } from "@/data/services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TiltCard } from "@/components/ui/TiltCard";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 
 function ServiceCard({ service }: { service: Service }) {
@@ -55,12 +54,11 @@ export function Services() {
       id="services"
       className="relative overflow-hidden border-t border-concrete-800 bg-concrete-900 py-24 md:py-32"
     >
-      <BlueprintGrid />
       <div className="section-shell relative">
         <SectionHeading
           eyebrow="What We Do"
-          title="Specialized *infrastructure* delivery."
-          description="Turnkey water, pipeline, drainage and treatment works delivered through one accountable engineering team."
+          title="Our core *competencies*."
+          description="Hydraulic Infrastructure & Public Health Engineering (PHE), delivered through one accountable engineering team."
         />
 
         <motion.div

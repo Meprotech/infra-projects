@@ -1,16 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedText } from "@/components/ui/AnimatedText";
 import { Reveal } from "@/components/ui/Reveal";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 
 export function CTABanner() {
   return (
     <section className="relative overflow-hidden border-t border-concrete-800 bg-concrete-900">
-      {/* slowly panning blueprint grid + moving accent gradient */}
-      <BlueprintGrid large pan fade={false} className="opacity-50" />
+      {/* moving accent gradient */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -32,15 +30,17 @@ export function CTABanner() {
         </h2>
         <Reveal delay={0.15}>
           <p className="mx-auto mt-6 max-w-xl text-base text-concrete-300 sm:text-lg">
-            Tell us about your water, sewerage, irrigation or environmental works —
+            Tell us about your water, sewerage, irrigation or environmental works
             our team will get back with a clear path forward.
           </p>
         </Reveal>
         <Reveal delay={0.25}>
           <div className="mt-9">
-            <MagneticButton href="/contact" className="px-9 py-4 text-base">
-              Start a Conversation
-            </MagneticButton>
+            <Link href="/contact" className="conversation-button">
+              <span className="conversation-button__text">
+                Start a Conversation
+              </span>
+            </Link>
           </div>
         </Reveal>
       </div>

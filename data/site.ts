@@ -3,7 +3,7 @@ export const SITE = {
   shortName: "Kalathiya",
   logo: {
     mark: "/kalathiya-logo-mark.webp",
-    full: "/kalathiya-logo-full.webp",
+    full: "/kalathiya-logo-full.png",
   },
   taglineOptions: [
     "Engineering the Networks a Nation Runs On.",
@@ -41,7 +41,7 @@ export const SITE = {
   nav: [
     { label: "Home", href: "/#home" },
     { label: "About", href: "/#about" },
-    { label: "Services", href: "/#services" },
+    { label: "Competencies", href: "/#services" },
     { label: "Projects", href: "/#projects" },
     { label: "Presence", href: "/#presence" },
     { label: "Contact", href: "/contact" },
