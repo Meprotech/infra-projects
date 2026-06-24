@@ -59,8 +59,8 @@ export function Services() {
       <div className="section-shell relative">
         <SectionHeading
           eyebrow="What We Do"
-          title="Full-spectrum *infrastructure* delivery."
-          description="Four connected disciplines, delivered under one accountable team. Hover a card to see what's inside each."
+          title="Specialized *infrastructure* delivery."
+          description="Turnkey water, pipeline, drainage and treatment works delivered through one accountable engineering team."
         />
 
         <motion.div

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { HardHat, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { SITE } from "@/data/site";
 import { SERVICES } from "@/data/services";
 
@@ -11,8 +12,14 @@ export function Footer() {
         {/* Brand */}
         <div className="md:col-span-4">
           <Link href="/#home" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-ink">
-              <HardHat className="h-5 w-5" strokeWidth={2.2} />
+            <span className="relative h-12 w-14 shrink-0">
+              <Image
+                src={SITE.logo.mark}
+                alt=""
+                fill
+                sizes="56px"
+                className="object-contain"
+              />
             </span>
             <span className="font-heading text-base font-bold text-concrete-50">
               {SITE.name}
@@ -67,22 +74,34 @@ export function Footer() {
             Contact
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-concrete-400">
-            <li className="flex items-start gap-2.5">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-              <span>{SITE.contact.address}</span>
-            </li>
+            {SITE.contact.addresses.map((address) => (
+              <li key={address.label} className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                <span>
+                  <strong className="block font-medium text-concrete-300">
+                    {address.label}
+                  </strong>
+                  {address.value}
+                </span>
+              </li>
+            ))}
             <li className="flex items-center gap-2.5">
               <Mail className="h-4 w-4 shrink-0 text-accent" />
-              <a href={`mailto:${SITE.contact.email}`} className="hover:text-accent">
+              <a
+                href={`mailto:${SITE.contact.email}`}
+                className="break-all hover:text-accent"
+              >
                 {SITE.contact.email}
               </a>
             </li>
-            <li className="flex items-center gap-2.5">
-              <Phone className="h-4 w-4 shrink-0 text-accent" />
-              <a href={`tel:${SITE.contact.phone}`} className="hover:text-accent">
-                {SITE.contact.phone}
-              </a>
-            </li>
+            {SITE.contact.phones.map((phone) => (
+              <li key={phone.href} className="flex items-center gap-2.5">
+                <Phone className="h-4 w-4 shrink-0 text-accent" />
+                <a href={`tel:${phone.href}`} className="hover:text-accent">
+                  {phone.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

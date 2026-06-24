@@ -1,8 +1,8 @@
 import {
-  Droplets,
-  Waves,
-  Sprout,
-  Leaf,
+  Building2,
+  Factory,
+  MapPin,
+  Network,
   type LucideIcon,
 } from "lucide-react";
 
@@ -16,55 +16,55 @@ export interface Service {
 
 export const SERVICES: Service[] = [
   {
-    id: "water-supply",
-    title: "Water Supply",
-    icon: Droplets,
+    id: "har-ghar-nal-jal",
+    title: "Har Ghar Nal Jal Yojana",
+    icon: MapPin,
     summary:
-      "End-to-end potable water networks — from intake and treatment to the last household connection.",
+      "Complete turnkey execution of rural and urban distribution schemes, guaranteeing micro-level household tap connectivity.",
     points: [
-      "Rising & distribution mains",
-      "House service connections",
-      "Overhead & underground reservoirs",
-      "Pumping stations & SCADA",
+      "Turnkey water distribution",
+      "Rural and urban schemes",
+      "Household tap connectivity",
+      "Testing and commissioning",
     ],
   },
   {
-    id: "sewerage-drainage",
-    title: "Sewerage & Drainage",
-    icon: Waves,
+    id: "water-treatment-plants",
+    title: "Water Treatment Plants (WTP)",
+    icon: Factory,
     summary:
-      "Underground sewerage and stormwater systems engineered for capacity, longevity and easy maintenance.",
+      "Civil layout, intake construction and mechanical erection of filtration modules ensuring raw-to-potable water conversion.",
     points: [
-      "Sewer collecting systems",
-      "Jetting machinery & desilting",
-      "Stormwater drainage networks",
-      "Manholes & pumping mains",
+      "Civil and hydraulic layout",
+      "Intake construction",
+      "Filtration module erection",
+      "Raw-to-potable conversion",
     ],
   },
   {
-    id: "irrigation",
-    title: "Irrigation",
-    icon: Sprout,
+    id: "pipeline-transmission",
+    title: "Pipeline Transmission Networks",
+    icon: Network,
     summary:
-      "Canal, lift and micro-irrigation infrastructure that moves water efficiently to where it grows value.",
+      "High-pressure trenching, alignment and hydraulic testing of cross-country pipelines including MS, DI and HDPE.",
     points: [
-      "Canal lining & distributaries",
-      "Lift irrigation schemes",
-      "Pipeline irrigation networks",
-      "Check dams & control structures",
+      "Cross-country pipelines",
+      "Trenching and alignment",
+      "Hydraulic pressure testing",
+      "MS, DI and HDPE networks",
     ],
   },
   {
-    id: "environment",
-    title: "Environment & Sanitation",
-    icon: Leaf,
+    id: "urban-drainage-stp",
+    title: "Urban Drainage & STP",
+    icon: Building2,
     summary:
-      "Treatment and sanitation works that keep communities healthy and ecosystems intact.",
+      "Advanced civil underground sewerage networks and biological treatment facilities for long-term urban sanitation.",
     points: [
-      "Sewage & effluent treatment plants",
-      "Operation & maintenance contracts",
-      "Solid & liquid waste management",
-      "Public sanitation facilities",
+      "Underground sewerage networks",
+      "Urban drainage systems",
+      "Biological treatment facilities",
+      "Long-term sanitation works",
     ],
   },
 ];

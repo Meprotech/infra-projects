@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, type LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,10 +11,31 @@ export const metadata: Metadata = {
     "Get in touch with our team about water, sewerage, irrigation and environmental infrastructure projects.",
 };
 
-const DETAILS = [
-  { icon: MapPin, label: "Office", value: SITE.contact.address },
-  { icon: Mail, label: "Email", value: SITE.contact.email, href: `mailto:${SITE.contact.email}` },
-  { icon: Phone, label: "Phone", value: SITE.contact.phone, href: `tel:${SITE.contact.phone}` },
+interface ContactDetail {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  href?: string;
+}
+
+const DETAILS: ContactDetail[] = [
+  ...SITE.contact.addresses.map((address) => ({
+    icon: MapPin,
+    label: address.label,
+    value: address.value,
+  })),
+  ...SITE.contact.phones.map((phone, index) => ({
+    icon: Phone,
+    label: index === 0 ? "Primary Phone" : "Alternate Phone",
+    value: phone.label,
+    href: `tel:${phone.href}`,
+  })),
+  {
+    icon: Mail,
+    label: "Email",
+    value: SITE.contact.email,
+    href: `mailto:${SITE.contact.email}`,
+  },
   { icon: Clock, label: "Hours", value: "Mon–Sat, 9:30am – 6:30pm IST" },
 ];
 

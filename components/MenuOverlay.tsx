@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ArrowUpRight } from "lucide-react";
@@ -46,8 +47,19 @@ export function MenuOverlay({
 
           {/* overlay header */}
           <div className="section-shell relative flex h-16 items-center justify-between md:h-20">
-            <span className="font-heading text-base font-bold tracking-tight text-concrete-50">
-              {SITE.name}
+            <span className="flex items-center gap-2.5">
+              <span className="relative h-10 w-12">
+                <Image
+                  src={SITE.logo.mark}
+                  alt=""
+                  fill
+                  sizes="48px"
+                  className="object-contain"
+                />
+              </span>
+              <span className="font-heading text-sm font-bold tracking-tight text-concrete-50 sm:text-base">
+                {SITE.name}
+              </span>
             </span>
             <button
               onClick={onClose}
@@ -100,12 +112,15 @@ export function MenuOverlay({
                 >
                   {SITE.contact.email}
                 </a>
-                <a
-                  href={`tel:${SITE.contact.phone}`}
-                  className="transition-colors hover:text-accent"
-                >
-                  {SITE.contact.phone}
-                </a>
+                {SITE.contact.phones.map((phone) => (
+                  <a
+                    key={phone.href}
+                    href={`tel:${phone.href}`}
+                    className="transition-colors hover:text-accent"
+                  >
+                    {phone.label}
+                  </a>
+                ))}
               </div>
               <div className="flex gap-5">
                 {SITE.social.map((s) => (

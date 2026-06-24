@@ -13,9 +13,9 @@ export function WhyChooseUs() {
       <div className="section-shell relative">
         <SectionHeading
           align="center"
-          eyebrow="Why Choose Us"
-          title="Built on engineering, earned on *trust*."
-          description="The reasons public bodies bring us in — and bring us back."
+          eyebrow="Safety & Environment"
+          title="Health, safety & *environment*."
+          description="Clear site controls protect our people, reduce operational risk and safeguard the environments where we work."
         />
 
         <motion.div

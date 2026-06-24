@@ -3,7 +3,10 @@
 // Coordinates derived from the actual state geometry (bounding boxes) so each
 // pin lands inside the correct state at roughly the right city position.
 
-export type OfficeType = "Head Office" | "Regional Office" | "Site Office";
+export type OfficeType =
+  | "Head Office"
+  | "Regional Execution Office"
+  | "Site Office";
 
 export interface OfficeLocation {
   id: string;
@@ -16,9 +19,12 @@ export interface OfficeLocation {
 
 export const LOCATIONS: OfficeLocation[] = [
   { id: "l1", city: "Surat", state: "Gujarat", type: "Head Office", x: 96, y: 381 },
-  { id: "l2", city: "Gandhinagar", state: "Gujarat", type: "Regional Office", x: 93, y: 336 },
-  { id: "l3", city: "Vadodara", state: "Gujarat", type: "Site Office", x: 104, y: 358 },
-  { id: "l4", city: "Jaipur", state: "Rajasthan", type: "Regional Office", x: 160, y: 250 },
-  { id: "l5", city: "Lucknow", state: "Uttar Pradesh", type: "Site Office", x: 268, y: 252 },
-  { id: "l6", city: "Patna", state: "Bihar", type: "Site Office", x: 355, y: 280 },
+  {
+    id: "l2",
+    city: "Dewas",
+    state: "Madhya Pradesh",
+    type: "Regional Execution Office",
+    x: 179,
+    y: 359,
+  },
 ];

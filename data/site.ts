@@ -1,22 +1,37 @@
-// Central site / brand config. Everything bracketed is a placeholder meant to be
-// find-and-replaced once real brand content is ready.
-
 export const SITE = {
-  name: "[COMPANY NAME]",
-  // Three original tagline options — pick one and delete the rest.
+  name: "Kalathiya Infrastructure",
+  shortName: "Kalathiya",
+  logo: {
+    mark: "/kalathiya-logo-mark.webp",
+    full: "/kalathiya-logo-full.webp",
+  },
   taglineOptions: [
     "Engineering the Networks a Nation Runs On.",
     "Building the Infrastructure Beneath Progress.",
-    "From Source to Service — Water, Sewerage, Sustained.",
+    "Building Infrastructure for Future.",
   ],
-  tagline: "Engineering the Networks a Nation Runs On.",
+  tagline: "Building Infrastructure for Future.",
   description:
-    "A government-approved infrastructure construction company delivering water supply, sewerage, drainage, stormwater, irrigation and environmental projects across India.",
-  foundingYear: "[FOUNDING YEAR]",
+    "Kalathiya Infrastructure delivers water supply, sewerage, drainage, stormwater, irrigation and environmental infrastructure projects across India.",
+  foundingYear: "2016",
   contact: {
-    address: "[OFFICE ADDRESS], Gujarat, India",
-    email: "[EMAIL]",
-    phone: "[PHONE]",
+    addresses: [
+      {
+        label: "Head Office",
+        value:
+          "412, Avalon Business Hub, Katargam, Surat - 395004, Gujarat",
+      },
+      {
+        label: "Regional Execution Office",
+        value:
+          "House No. 25, Near Hanuman Temple, MR-3, Gautam Nagar, Balgrah Road, Dewas - 455001, Madhya Pradesh",
+      },
+    ],
+    phones: [
+      { label: "+91 99044 32736", href: "+919904432736" },
+      { label: "+91 99044 32366", href: "+919904432366" },
+    ],
+    email: "kalathiya.infra@gmail.com",
   },
   social: [
     { label: "LinkedIn", href: "#" },

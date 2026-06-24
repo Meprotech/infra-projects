@@ -12,7 +12,7 @@ const [, , VB_W, VB_H] = INDIA_VIEWBOX.split(" ").map(Number);
 
 const TYPE_META: Record<OfficeType, { emoji: string; short: string }> = {
   "Head Office": { emoji: "🏛️", short: "HQ" },
-  "Regional Office": { emoji: "🏢", short: "Regional" },
+  "Regional Execution Office": { emoji: "🏢", short: "Regional" },
   "Site Office": { emoji: "🚧", short: "Site" },
 };
 

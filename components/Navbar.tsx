@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { HardHat } from "lucide-react";
 import { SITE } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { MenuOverlay } from "@/components/MenuOverlay";
@@ -42,15 +42,22 @@ export function Navbar() {
         <nav className="section-shell flex h-16 items-center justify-between md:h-20">
           <Link
             href="/#home"
-            className="group flex items-center gap-2.5"
+            className="group flex min-w-0 items-center gap-2.5"
             aria-label={`${SITE.name} home`}
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-ink transition-transform duration-300 group-hover:scale-105">
-              <HardHat className="h-5 w-5" strokeWidth={2.2} />
+            <span className="relative h-10 w-12 shrink-0 transition-transform duration-300 group-hover:scale-105 md:h-12 md:w-14">
+              <Image
+                src={SITE.logo.mark}
+                alt=""
+                fill
+                priority
+                sizes="56px"
+                className="object-contain"
+              />
             </span>
             <span
               className={cn(
-                "font-heading text-base font-bold tracking-tight transition-colors",
+                "truncate font-heading text-sm font-bold tracking-tight transition-colors sm:text-base",
                 onDark ? "text-white" : "text-concrete-50",
               )}
             >

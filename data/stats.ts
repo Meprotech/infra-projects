@@ -12,8 +12,8 @@ export interface Stat {
 }
 
 export const STATS: Stat[] = [
-  { label: "Founded", value: 2017, display: "[FOUNDING YEAR]" },
-  { label: "Years of Experience", value: 8, suffix: "+" }, // [YEARS OF EXPERIENCE]
+  { label: "Founded", value: 2016, display: "2016" },
+  { label: "Years of Experience", value: 10, suffix: "+" },
   { label: "Employees", value: 80, suffix: "+" }, // [EMPLOYEE COUNT]
   { label: "States Covered", value: 4, suffix: "+" }, // [STATES COVERED]
 ];

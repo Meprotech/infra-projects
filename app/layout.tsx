@@ -37,6 +37,10 @@ export const metadata: Metadata = {
     template: `%s — ${SITE.name}`,
   },
   description: SITE.description,
+  icons: {
+    icon: SITE.logo.mark,
+    apple: SITE.logo.mark,
+  },
   metadataBase: new URL("https://example.com"), // TODO: set production URL
   openGraph: {
     title: `${SITE.name} — Infrastructure Construction`,
