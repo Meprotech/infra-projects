@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { AnimatedText } from "@/components/ui/AnimatedText";
-import { MagneticButton } from "@/components/ui/MagneticButton";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -24,7 +24,7 @@ export function Hero() {
           className="absolute inset-0"
         >
           <Image
-            src="/hero.webp"
+            src="/hero-treatment-plant.webp"
             alt="Aerial view of a water treatment and supply plant"
             fill
             priority
@@ -49,20 +49,10 @@ export function Hero() {
           Government-Approved Infrastructure
         </motion.p>
 
-        <h1 className="mx-auto mt-6 max-w-5xl font-heading text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-sm sm:text-6xl md:text-7xl xl:text-[5.5rem]">
+        <h1 className="mx-auto mt-6 max-w-5xl font-heading text-4xl font-bold leading-[1.05] tracking-tight text-white drop-shadow-sm sm:text-6xl md:text-7xl xl:text-[5.5rem]">
           <AnimatedText text="Building India's *Infrastructure*" delay={0.15} />
           
         </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: reduce ? 0 : 0.95, duration: 0.7 }}
-          className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg"
-        >
-          Water supply, sewerage, irrigation and environmental works for state
-          and municipal bodies — on spec, on schedule, built to last.
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -70,10 +60,18 @@ export function Hero() {
           transition={{ delay: reduce ? 0 : 1.1, duration: 0.7 }}
           className="mt-9 flex flex-wrap items-center justify-center gap-4"
         >
-          <MagneticButton href="/contact">Get in Touch</MagneticButton>
-          <MagneticButton href="/#services" variant="outline-light">
-            Explore Services
-          </MagneticButton>
+          <Link
+            href="/contact"
+            className="boton-elegante inline-flex items-center justify-center tracking-wide"
+          >
+            Get in Touch
+          </Link>
+          <Link
+            href="/#projects"
+            className="boton-elegante boton-elegante--transparent inline-flex items-center justify-center tracking-wide"
+          >
+            Explore Projects
+          </Link>
         </motion.div>
       </div>
 

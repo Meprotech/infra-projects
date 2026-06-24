@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { PROJECTS, PROJECT_FILTERS } from "@/data/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -68,12 +67,23 @@ export function Projects() {
         </motion.div>
 
         <div className="mt-12 flex justify-center">
+          {/* Sliding-fill button (adapted from Uiverse by nathAd17) */}
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 rounded-full border border-concrete-700 px-6 py-3 text-sm font-semibold text-concrete-50 transition-colors hover:border-accent hover:text-accent"
+            className="group relative isolate z-10 flex w-fit items-center gap-2 overflow-hidden rounded-full border-2 border-concrete-700 bg-concrete-900 px-6 py-3 text-sm font-semibold text-concrete-50 shadow-lg transition-all duration-700 before:absolute before:-left-full before:-z-10 before:aspect-square before:w-full before:rounded-full before:bg-accent before:transition-all before:duration-700 hover:text-concrete-950 hover:before:left-0 hover:before:scale-150 sm:text-base"
           >
             View All Projects
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <svg
+              className="h-8 w-8 rotate-45 rounded-full border border-concrete-600 p-2 duration-300 ease-linear group-hover:rotate-90 group-hover:border-none group-hover:bg-concrete-950"
+              viewBox="0 0 16 19"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
+                className="fill-concrete-50"
+              />
+            </svg>
           </Link>
         </div>
       </div>

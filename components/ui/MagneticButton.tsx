@@ -61,7 +61,7 @@ export function MagneticButton({
     variant === "primary"
       ? "bg-accent text-ink hover:bg-accent-soft shadow-[0_10px_30px_-10px_rgb(var(--accent)/0.6)]"
       : variant === "outline-light"
-        ? "border border-white/40 text-white backdrop-blur-sm hover:border-accent hover:bg-white/5 hover:text-accent"
+        ? "border border-white/40 text-white backdrop-blur-sm hover:border-yellow-200 hover:bg-white/5 hover:text-yellow-200"
         : "border border-concrete-500 text-concrete-50 hover:border-accent hover:text-accent";
 
   const inner = (

@@ -16,7 +16,6 @@ export function PageHeader({ eyebrow, title, description }: PageHeaderProps) {
       <div className="pointer-events-none absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-radial-fade blur-2xl" />
       <div className="section-shell relative">
         <span className="eyebrow">
-          <span className="h-px w-6 bg-accent" />
           {eyebrow}
         </span>
         <h1 className="mt-4 max-w-3xl font-heading text-4xl font-bold leading-[1.05] tracking-tight text-concrete-50 sm:text-5xl md:text-6xl">

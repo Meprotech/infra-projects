@@ -70,7 +70,9 @@ export function Presence() {
       className="relative overflow-hidden bg-concrete-950 py-24 md:py-32"
     >
       <div className="section-shell relative grid gap-14 lg:grid-cols-2 lg:items-center">
-        <div>
+        {/* On mobile the map shows first, then the info; desktop keeps
+            info-left / map-right via the lg: order overrides. */}
+        <div className="order-2 lg:order-1">
           <SectionHeading
             eyebrow="Where We Work"
             title="A growing *footprint* across India."
@@ -103,7 +105,7 @@ export function Presence() {
         </div>
 
         {/* Map */}
-        <Reveal y={36}>
+        <Reveal y={36} className="order-1 lg:order-2">
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -126,7 +128,6 @@ export function Presence() {
               viewBox={INDIA_VIEWBOX}
               role="img"
               aria-label="Map of India showing our office locations and network"
-              style={{ filter: "drop-shadow(0 12px 16px rgba(20,18,14,0.22))" }}
             >
               <defs>
                 <linearGradient id="reliefTop" x1="0" y1="0" x2="0" y2="1">

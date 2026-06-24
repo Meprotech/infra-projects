@@ -14,7 +14,7 @@ import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 // Real project photography from /public, shown as a scroll-driven crossfade.
 const SLIDES = [
   {
-    src: "/1.webp",
+    src: "/how-we-build-1.png",
     num: "01",
     title: "Treatment at scale",
     body: "Clarifiers, digesters and treatment works that turn raw water and sewage into safe, compliant output.",
@@ -130,7 +130,6 @@ function StaticJourney() {
       <BlueprintGrid />
       <div className="section-shell relative">
         <span className="eyebrow">
-          <span className="h-px w-6 bg-accent" />
           How We Build
         </span>
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -216,7 +215,6 @@ export function ScrollJourney() {
         {/* eyebrow + counter pinned top */}
         <div className="section-shell pointer-events-none relative z-10 flex items-center justify-between pt-24 md:pt-28">
           <span className="eyebrow text-white">
-            <span className="h-px w-6 bg-white" />
             How We Build
           </span>
           <Counter progress={scrollYProgress} total={SLIDES.length} />

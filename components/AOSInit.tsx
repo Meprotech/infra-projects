@@ -13,10 +13,10 @@ export function AOSInit() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     AOS.init({
-      duration: 550, // fast
-      easing: "ease-out-cubic", // smooth
+      duration: 400, // snappy
+      easing: "ease-out", // smooth + fast
       once: true, // animate a single time
-      offset: 90, // trigger a little before fully in view
+      offset: 60, // trigger close to entering the viewport
       delay: 0,
       disable: reduce,
     });

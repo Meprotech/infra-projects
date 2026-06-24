@@ -18,18 +18,18 @@ export default function HomePage() {
         <About />
       </div>
       <div data-aos="fade-up">
+        <Presence />
+      </div>
+      <div data-aos="fade-up">
         <Services />
       </div>
-      <ScrollJourney />
       <div data-aos="fade-up">
         <Projects />
       </div>
       <div data-aos="fade-up">
         <WhyChooseUs />
       </div>
-      <div data-aos="fade-up">
-        <Presence />
-      </div>
+      <ScrollJourney />
       <div data-aos="fade-up">
         <Clients />
       </div>

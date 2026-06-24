@@ -25,6 +25,20 @@
     scroll-behavior: smooth;
   }
 
+  /* Scale the whole UI down on small screens so everything fits comfortably.
+     All Tailwind sizing is rem-based, so this shrinks text, padding, gaps and
+     map pins proportionally. (Breakpoints are px-based, so they don't shift.) */
+  @media (max-width: 767px) {
+    html {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 400px) {
+    html {
+      font-size: 13px;
+    }
+  }
+
   body {
     @apply bg-concrete-950 text-concrete-200 antialiased;
     font-feature-settings: "ss01", "cv01";
@@ -64,7 +78,7 @@
 @layer components {
   /* Section heading eyebrow used across sections */
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-accent;
+    @apply inline-flex items-center text-xs font-semibold uppercase tracking-[0.25em] text-accent;
   }
 
   .section-shell {
@@ -88,6 +102,58 @@
 /* Hairline utilities for blueprint motif */
 .hairline-t {
   border-top: 1px solid rgb(var(--grid) / 0.18);
+}
+
+/* From Uiverse.io by iZOXVL */
+.boton-elegante {
+  padding: 10px 20px;
+  border: 2px solid #2c2c2c;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.4s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.boton-elegante::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: scale(0);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.boton-elegante:hover::after {
+  transform: scale(4);
+}
+
+.boton-elegante:hover {
+  border-color: #666666;
+  background: #292929;
+}
+
+.boton-elegante--transparent {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: transparent;
+}
+
+.boton-elegante--transparent:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ── Lenis smooth scroll (recommended baseline styles) ── */
@@ -266,11 +332,8 @@ html.lenis body {
 /* The `html` prefix wins over aos.css's base rule; AOS's .aos-animate end      */
 /* state (higher specificity) still resets the transform to 0.                 */
 /* ───────────────────────────────────────────────────────────────────────── */
-[data-aos] {
-  will-change: transform, opacity;
-}
 html [data-aos="fade-up"] {
-  transform: translate3d(0, 30px, 0);
+  transform: translate3d(0, 24px, 0);
 }
 html [data-aos="fade-down"] {
   transform: translate3d(0, -30px, 0);

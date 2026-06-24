@@ -29,7 +29,6 @@ export function SectionHeading({
     >
       <Reveal>
         <span className="eyebrow">
-          <span className="h-px w-6 bg-accent" />
           {eyebrow}
         </span>
       </Reveal>

@@ -39,10 +39,10 @@ export function About() {
               className="absolute -bottom-6 -right-4 rounded-xl border border-concrete-700 bg-concrete-900/90 p-5 shadow-lift backdrop-blur sm:-right-6"
             >
               <p className="font-heading text-3xl font-bold text-accent">
-                <Counter to={STATS[2].value} suffix={STATS[2].suffix} />
+                <Counter to={120} suffix="+" />
               </p>
               <p className="mt-1 text-xs text-concrete-400">
-                {STATS[2].label}
+                Projects Completed
               </p>
             </motion.div>
           </div>

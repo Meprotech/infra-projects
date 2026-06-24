@@ -36,7 +36,7 @@ export function Reveal({
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: EASE, delay },
+      transition: { duration: 0.5, ease: EASE, delay },
     },
   };
 
