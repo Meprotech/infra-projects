@@ -23,7 +23,7 @@ export function WhyChooseUs() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6 lg:grid-cols-3"
         >
           {STRENGTHS.map((s) => {
             const Icon = s.icon;
@@ -31,17 +31,17 @@ export function WhyChooseUs() {
               <motion.div
                 key={s.title}
                 variants={fadeUp}
-                className="group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-950/60 p-7 transition-colors hover:border-accent/40"
+                className="group relative overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-950/60 p-4 transition-colors hover:border-accent/40 sm:p-7"
               >
                 {/* hover accent sweep */}
                 <span className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-concrete-800 text-accent ring-1 ring-concrete-700 transition-transform duration-300 group-hover:scale-110">
-                  <Icon className="h-5 w-5" strokeWidth={1.8} />
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-concrete-800 text-accent ring-1 ring-concrete-700 transition-transform duration-300 group-hover:scale-110 sm:h-11 sm:w-11">
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.8} />
                 </span>
-                <h3 className="mt-5 font-heading text-lg font-semibold text-concrete-50">
+                <h3 className="mt-4 font-heading text-base font-semibold leading-snug text-concrete-50 sm:mt-5 sm:text-lg">
                   {s.title}
                 </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-concrete-400">
+                <p className="mt-2 text-xs leading-relaxed text-concrete-400 sm:mt-2.5 sm:text-sm">
                   {s.description}
                 </p>
               </motion.div>

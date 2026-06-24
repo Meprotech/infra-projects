@@ -14,25 +14,25 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <motion.div variants={fadeUp} className="h-full [perspective:1000px]">
       <TiltCard max={6} className="group h-full">
-        <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-900/70 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow [transform-style:preserve-3d]">
+        <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-concrete-700 bg-concrete-900/70 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow sm:p-7 [transform-style:preserve-3d]">
           {/* corner index */}
-          <span className="absolute right-5 top-5 font-heading text-xs font-medium text-concrete-600">
+          <span className="absolute right-3 top-3 font-heading text-[10px] font-medium text-concrete-600 sm:right-5 sm:top-5 sm:text-xs">
             0{SERVICES.indexOf(service) + 1}
           </span>
 
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20 transition-colors group-hover:bg-accent group-hover:text-ink">
-            <Icon className="h-6 w-6" strokeWidth={1.8} />
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20 transition-colors group-hover:bg-accent group-hover:text-ink sm:h-12 sm:w-12">
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.8} />
           </span>
 
-          <h3 className="mt-5 font-heading text-xl font-semibold text-concrete-50">
+          <h3 className="mt-4 font-heading text-base font-semibold leading-snug text-concrete-50 sm:mt-5 sm:text-xl">
             {service.title}
           </h3>
-          <p className="mt-2.5 text-sm leading-relaxed text-concrete-400">
+          <p className="mt-2 text-xs leading-relaxed text-concrete-400 sm:mt-2.5 sm:text-sm">
             {service.summary}
           </p>
 
-          {/* Sub-points — always visible */}
-          <ul className="mt-5 space-y-1 border-t border-concrete-700 pt-4">
+          {/* Detailed sub-points return when cards have more horizontal room. */}
+          <ul className="mt-5 hidden space-y-1 border-t border-concrete-700 pt-4 sm:block">
             {service.points.map((p) => (
               <li
                 key={p}
@@ -68,7 +68,7 @@ export function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6 lg:grid-cols-4"
         >
           {SERVICES.map((service) => (
             <ServiceCard key={service.id} service={service} />
