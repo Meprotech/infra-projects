@@ -76,7 +76,7 @@ export function Presence() {
           <SectionHeading
             eyebrow="Where We Work"
             title="A growing *footprint* across India."
-            description="From our base in Gujarat, we deliver and maintain projects across multiple states — coordinated through head, regional and site offices."
+            description="From our base in Gujarat, we deliver and maintain projects across multiple states  coordinated through head, regional and site offices."
           />
 
           <Reveal delay={0.1}>

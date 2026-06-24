@@ -12,16 +12,16 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden text-center"
+      className="relative flex min-h-[calc(100svh+80px)] items-center justify-center overflow-hidden bg-black text-center"
     >
       {/* Full-bleed background image. Swap public/hero.webp with the real photo
           (keep the same path/filename). */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-x-0 -top-2 -bottom-8 z-0">
         <motion.div
           initial={reduce ? undefined : { scale: 1.08 }}
           animate={reduce ? undefined : { scale: 1 }}
           transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0"
+          className="absolute inset-0 origin-bottom"
         >
           <Image
             src="/hero-treatment-plant.webp"
@@ -29,7 +29,7 @@ export function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-bottom"
           />
         </motion.div>
 
@@ -39,7 +39,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/45" />
       </div>
 
-      <div className="section-shell relative">
+      <div className="section-shell relative z-10">
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
