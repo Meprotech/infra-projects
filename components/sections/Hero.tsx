@@ -92,8 +92,7 @@ export function Hero() {
       id="home"
       className="relative flex min-h-[calc(100svh+80px)] items-center justify-center overflow-hidden bg-black text-center"
     >
-      {/* Full-bleed background image. Swap public/hero.webp with the real photo
-          (keep the same path/filename). */}
+      {/* Full-bleed automatic project slideshow. */}
       <div className="absolute inset-x-0 -top-2 -bottom-8 z-0">
         <div className="hero-media absolute inset-0 origin-bottom">
           {previousSlide !== null && (

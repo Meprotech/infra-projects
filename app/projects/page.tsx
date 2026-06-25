@@ -17,7 +17,7 @@ export default function ProjectsPage() {
         description="Filter by state or sector to explore representative projects. All entries are placeholders pending real project data."
       />
       <section className="bg-concrete-950 py-16 md:py-20">
-        <div className="section-shell" data-aos="fade-up">
+        <div className="section-shell">
           <ProjectsExplorer />
         </div>
       </section>

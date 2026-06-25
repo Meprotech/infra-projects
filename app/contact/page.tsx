@@ -49,10 +49,7 @@ export default function ContactPage() {
       />
 
       <section className="bg-concrete-950 py-16 md:py-24">
-        <div
-          className="section-shell grid gap-12 lg:grid-cols-[1fr_1.4fr]"
-          data-aos="fade-up"
-        >
+        <div className="section-shell grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           {/* Details */}
           <Reveal>
             <div className="space-y-6">
