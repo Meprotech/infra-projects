@@ -3,16 +3,12 @@
 @tailwind utilities;
 
 :root {
-  /* ── Theme tokens (RGB triplets so Tailwind's <alpha-value> works) ── */
-  /* Monochrome black & white: the "accent" is near-black. To bring a colour
-     accent back, set e.g. amber: --accent: 255 138 0; --accent-soft: 255 176 64; */
+  /* Theme tokens (RGB triplets so Tailwind's <alpha-value> works). */
   --accent: 24 23 20;
   --accent-soft: 51 49 44;
   --steel: 56 124 188;
   --grid: 90 100 112;
-
   --marquee-duration: 40s;
-
   color-scheme: light;
 }
 
@@ -25,14 +21,12 @@
     scroll-behavior: smooth;
   }
 
-  /* Scale the whole UI down on small screens so everything fits comfortably.
-     All Tailwind sizing is rem-based, so this shrinks text, padding, gaps and
-     map pins proportionally. (Breakpoints are px-based, so they don't shift.) */
   @media (max-width: 767px) {
     html {
       font-size: 14px;
     }
   }
+
   @media (max-width: 400px) {
     html {
       font-size: 13px;
@@ -45,7 +39,6 @@
     overflow-x: hidden;
   }
 
-  /* Respect users who ask for less motion: kill long/animated transitions. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -62,21 +55,19 @@
     color: #f4f3ee;
   }
 
-  /* Hidden scrollbar — scrolling still works (smooth scroll + top progress bar
-     give the visual cue). */
   html {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* legacy Edge/IE */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+
   ::-webkit-scrollbar {
     width: 0;
     height: 0;
-    display: none; /* Chrome, Safari, Edge */
+    display: none;
   }
 }
 
 @layer components {
-  /* Section heading eyebrow used across sections */
   .eyebrow {
     @apply inline-flex items-center text-xs font-semibold uppercase tracking-[0.25em] text-accent;
   }
@@ -85,12 +76,10 @@
     @apply relative mx-auto w-full max-w-7xl px-5 sm:px-8;
   }
 
-  /* Heading text gradient for premium feel (dark ink → mid grey on light) */
   .text-gradient {
     @apply bg-gradient-to-br from-concrete-50 via-concrete-100 to-concrete-400 bg-clip-text text-transparent;
   }
 
-  /* Adapted from Uiverse.io by AlimurtuzaCodes. */
   .conversation-button {
     display: inline-flex;
     width: 17rem;
@@ -136,12 +125,10 @@
   }
 }
 
-/* Hairline utilities for blueprint motif */
 .hairline-t {
   border-top: 1px solid rgb(var(--grid) / 0.18);
 }
 
-/* From Uiverse.io by iZOXVL */
 .boton-elegante {
   padding: 10px 20px;
   border: 2px solid #2c2c2c;
@@ -150,7 +137,9 @@
   font-size: 0.875rem;
   cursor: pointer;
   border-radius: 30px;
-  transition: all 0.4s ease;
+  transition:
+    border-color 0.4s ease,
+    background-color 0.4s ease;
   outline: none;
   position: relative;
   overflow: hidden;
@@ -160,10 +149,7 @@
 .boton-elegante::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.25) 0%,
@@ -193,225 +179,368 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* ── Lenis smooth scroll (recommended baseline styles) ── */
 html.lenis,
 html.lenis body {
   height: auto;
 }
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
+
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
+
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
 
-/* ───────────────────────────────────────────────────────────────────────── */
-/* Presence map — pin / sign system (user-provided)                          */
-/* ───────────────────────────────────────────────────────────────────────── */
-
-/* Variables */
-.map-container {
-  --city-radius: 2rem;
-  --city-sign-color-back: #00c080;
-  --city-sign-color-font: #fff;
-  --city-pin-size-font: 1.2rem;
-}
-
-/* Container */
-.map-container {
-  border-radius: 0.5em;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-  line-height: 1;
-  min-width: 15rem;
+/* Interactive India map */
+.india-map-viewport {
   position: relative;
-  width: 50%;
-  aspect-ratio: 1;
+  width: 100%;
+  max-width: 32rem;
+  min-width: 15rem;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+  box-shadow: none;
+  perspective: 1100px;
 }
 
-/* Map - Background */
-.map-background {
-  border-radius: inherit;
-  left: 0;
+.india-map-grid {
   position: absolute;
-  top: 0;
-  width: 100%;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgba(70, 66, 58, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 66, 58, 0.11) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  mask-image: radial-gradient(circle at center, black, transparent 76%);
+  transition: opacity 500ms ease;
 }
 
-/* Map - Cities */
-.map-cities {
-  width: 100%;
+.india-map-viewport.is-focused .india-map-grid {
+  opacity: 0.12;
 }
-.map-city {
-  border-radius: var(--city-radius);
-  left: calc(var(--x) * 1% - var(--city-radius));
-  padding: var(--city-radius);
+
+.india-map-camera,
+.india-map-plane,
+.india-map-svg,
+.india-map-pins {
   position: absolute;
-  top: calc(var(--y) * 1% - var(--city-radius));
-  /* pins are now <button>s (click-to-zoom) — strip native chrome */
-  appearance: none;
-  background: none;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.india-map-camera {
+  z-index: 2;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transition:
+    mask-image 500ms ease,
+    -webkit-mask-image 500ms ease;
+}
+
+.india-map-viewport.is-focused .india-map-camera {
+  -webkit-mask-image: radial-gradient(
+    ellipse 72% 68% at center,
+    #000 48%,
+    rgba(0, 0, 0, 0.82) 66%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 72% 68% at center,
+    #000 48%,
+    rgba(0, 0, 0, 0.82) 66%,
+    transparent 100%
+  );
+}
+
+.india-map-plane {
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.india-map-dismiss {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  padding: 0;
   border: 0;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
+  appearance: none;
+  background: transparent;
+  cursor: zoom-out;
 }
 
-/* Active (clicked) pin emphasis — pulsing ring, distinct from hover sign */
-.map-city__ring {
+.india-map-dismiss:focus-visible {
+  outline: 2px solid #181714;
+  outline-offset: -5px;
+}
+
+.india-map-svg {
+  overflow: visible;
+}
+
+.india-map-pins {
+  pointer-events: none;
+  transform: translateZ(22px);
+}
+
+.india-map-pin {
+  position: absolute;
+  left: var(--pin-x);
+  top: var(--pin-y);
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  appearance: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 22;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  transition: filter 180ms ease;
+}
+
+.india-map-pin:focus-visible {
+  outline: 2px solid #181714;
+  outline-offset: 3px;
+}
+
+.india-map-pin__halo,
+.india-map-pin__core,
+.india-map-pin__stem {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 1.4em;
-  height: 1.4em;
-  margin: -0.7em 0 0 -0.7em;
-  border-radius: 50%;
-  border: 0.12em solid var(--city-sign-color-back);
   pointer-events: none;
 }
-.map-city.is-active::after {
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.45));
-  transform: translateY(0.5em) scale(1.15);
+
+.india-map-pin__halo {
+  width: 1.65rem;
+  height: 1.65rem;
+  border: 1px solid rgba(24, 23, 20, 0.38);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 260ms cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 260ms ease;
 }
 
-/* Clicked/zoomed pin keeps its city-name sign visible (hover normally shows
-   it, but hover is suppressed while zoomed — see .is-zoomed below). */
-.map-city.is-active .map-city__label {
-  display: block;
-  animation: fadein 300ms forwards ease-out;
+.india-map-pin__core {
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 2px solid #f4f3ee;
+  border-radius: 999px;
+  background: #181714;
+  box-shadow:
+    0 3px 8px rgba(24, 23, 20, 0.32),
+    0 0 0 1px rgba(24, 23, 20, 0.2);
+  transform: translate(-50%, -50%);
 }
 
-/* While a pin is zoomed-in, suppress the CSS hover sign so it doesn't
-   clash with the active-zoom state. */
-/* While zoomed, hide every in-map sign — DOM text magnified inside the 3D
-   layer rasterises soft. The crisp glass info card (outside the zoom layer)
-   carries the city name instead, so the label stays perfectly sharp. */
-.map-cities.is-zoomed .map-city .map-city__label {
-  display: none;
-}
-.map-city::after,
-.map-city::before {
-  font-size: var(--city-pin-size-font);
-}
-.map-city::before {
-  content: "•";
-  left: calc(-50% + var(--city-radius));
-  position: absolute;
-  top: calc(-0.65em + var(--city-radius));
-  text-align: center;
-  text-shadow: 0 1px 1px #000;
-  width: 100%;
-}
-.map-city::after {
-  clip-path: inset(-0.5em 0 0 0);
-  content: "📍";
-  left: calc(-50% + var(--city-radius));
-  position: absolute;
-  top: calc(-1em + var(--city-radius));
-  text-align: center;
-  transition: all 300ms ease-out;
-  width: 100%;
-  z-index: var(--y);
+.india-map-pin__stem {
+  width: 1px;
+  height: 1rem;
+  background: linear-gradient(#181714, transparent);
+  transform: translate(-50%, 0.35rem);
+  transform-origin: top;
+  transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Map - Sign */
-.map-city__label {
-  display: none;
-  left: calc(-5em + 50%);
-  position: absolute;
-  text-align: center;
-  width: 10em;
-  z-index: 999;
-}
-.map-city__sign {
-  align-items: center;
-  background-color: var(--city-sign-color-back);
-  border-radius: 0.2rem;
-  border: 0.15em solid var(--city-sign-color-font);
-  box-shadow: 0 0 3px #000;
-  color: var(--city-sign-color-font);
-  column-gap: 0.3em;
-  display: flex;
-  font-weight: 700;
-  justify-content: center;
-  margin: 0 auto;
-  max-width: 100%;
-  overflow: hidden;
-  padding: 0.4em 0.6em 0.4em 0.3em;
-  text-overflow: ellipsis;
-  text-wrap: nowrap;
-  width: max-content;
-}
-.map-city__sign::before {
-  content: attr(data-icon);
+.india-map-pin.is-active {
+  filter: drop-shadow(0 5px 8px rgba(24, 23, 20, 0.35));
 }
 
-/* Tracking - Cities */
-.map-city:hover::after {
-  clip-path: inset(-0.5em 0 0.5em 0);
-  transform: translateY(0.5em);
+.india-map-pin.is-active .india-map-pin__halo {
+  opacity: 0.75;
+  transform: translate(-50%, -50%) scale(1.35);
+  animation: india-pin-pulse 1.4s ease-out infinite;
 }
 
-/* Tracking - Sign */
-.map-city:hover .map-city__label {
-  animation: fadein 300ms forwards ease-out;
-  display: block;
-}
-.map-city:hover .map-city__sign.anim::before {
-  animation-duration: 500ms;
-  animation-fill-mode: forwards;
-}
-.map-city:hover .map-city__sign.anim-grow::before {
-  animation-name: grow;
-  animation-timing-function: ease-in;
-}
-.map-city:hover .map-city__sign.anim-slidein::before {
-  animation-name: slidein;
-  animation-timing-function: ease-out;
+.india-map-pin.is-active .india-map-pin__stem {
+  transform: translate(-50%, 0.35rem) scaleY(1.45);
 }
 
-/* Animations */
-@keyframes fadein {
+@keyframes india-pin-pulse {
   0% {
-    opacity: 0;
-    top: calc(var(--city-radius));
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(0.8);
   }
   100% {
-    opacity: 1;
-    top: calc(var(--city-radius) + var(--city-pin-size-font) / 2);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
-@keyframes grow {
-  0% { transform: translate(0, 200%); }
-  10% { transform: translate(5%, 180%); }
-  20% { transform: translate(-10%, 160%); }
-  30% { transform: translate(15%, 140%); }
-  40% { transform: translate(-5%, 120%); }
-  50% { transform: translate(10%, 100%); }
-  60% { transform: translate(-15%, 80%); }
-  70% { transform: translate(5%, 60%); }
-  80% { transform: translate(0, 40%); }
-  90% { transform: translate(0, 20%); }
-  100% { transform: translate(0, 0); }
-}
-@keyframes slidein {
-  0% { transform: translateX(-200%); }
-  100% { transform: translateX(0); }
+
+.india-city-reveal {
+  position: absolute;
+  z-index: 24;
+  left: 50%;
+  top: 20%;
+  display: flex;
+  width: min(82%, 19rem);
+  flex-direction: column;
+  align-items: center;
+  padding: 1.15rem 1.4rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(219, 214, 204, 0.88));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 3px 0 #a8a196,
+    0 6px 0 #817b71,
+    0 20px 40px -20px rgba(24, 23, 20, 0.65);
+  text-align: center;
+  transform-style: preserve-3d;
+  transform-origin: center bottom;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* ───────────────────────────────────────────────────────────────────────── */
-/* AOS tuning — subtle travel + GPU hint so section reveals stay smooth/fast.  */
-/* The `html` prefix wins over aos.css's base rule; AOS's .aos-animate end      */
-/* state (higher specificity) still resets the transform to 0.                 */
-/* ───────────────────────────────────────────────────────────────────────── */
+.india-city-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0.35rem;
+  border: 1px solid rgba(24, 23, 20, 0.08);
+  border-radius: 0.65rem;
+  pointer-events: none;
+}
+
+.india-city-reveal__kicker,
+.india-city-reveal__type {
+  position: relative;
+  z-index: 1;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.india-city-reveal__kicker {
+  color: #6a665d;
+}
+
+.india-city-reveal__name {
+  position: relative;
+  z-index: 2;
+  margin-top: 0.35rem;
+  color: #181714;
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-size: clamp(2rem, 8vw, 3.35rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  text-shadow:
+    0 1px 0 #f8f6f1,
+    0 2px 0 #c5beb2,
+    0 3px 0 #a49d91,
+    0 4px 0 #837d73,
+    0 8px 12px rgba(24, 23, 20, 0.24);
+  transform: translateZ(30px);
+}
+
+.india-city-reveal__type {
+  margin-top: 0.75rem;
+  color: #48453e;
+}
+
+.india-map-status {
+  position: absolute;
+  z-index: 25;
+  left: 50%;
+  bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(24, 23, 20, 0.12);
+  border-radius: 999px;
+  background: rgba(251, 250, 247, 0.84);
+  padding: 0.45rem 0.75rem;
+  color: #48453e;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  backdrop-filter: blur(8px);
+}
+
+.india-map-status span {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #181714;
+  animation: india-status-blink 700ms ease-in-out infinite alternate;
+}
+
+@keyframes india-status-blink {
+  from {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.india-map-vignette {
+  position: absolute;
+  z-index: 16;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 62% 60% at center,
+    transparent 55%,
+    rgba(244, 243, 238, 0.42) 76%,
+    #f4f3ee 100%
+  );
+  opacity: 0;
+  transition: opacity 450ms ease;
+}
+
+.india-map-viewport.is-focused .india-map-vignette {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .india-map-pin:hover .india-map-pin__halo {
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+}
+
+@media (max-width: 639px) {
+  .india-city-reveal {
+    top: 18%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .india-map-pin.is-active .india-map-pin__halo,
+  .india-map-status span {
+    animation: none;
+  }
+}
+
 html [data-aos="fade-up"] {
   transform: translate3d(0, 24px, 0);
 }
+
 html [data-aos="fade-down"] {
   transform: translate3d(0, -30px, 0);
 }

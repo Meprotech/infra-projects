@@ -28,7 +28,7 @@ export function Clients() {
               variants={fadeUp}
               className={`flex min-h-24 items-center justify-center bg-concrete-900 px-4 py-6 text-center transition-colors hover:bg-concrete-800 sm:min-h-28 sm:px-6 ${
                 index === CLIENTS.length - 1
-                  ? "col-span-2 mx-auto w-1/2 lg:col-span-1 lg:mx-0 lg:w-full"
+                  ? "col-span-2 lg:col-span-1"
                   : ""
               }`}
             >
