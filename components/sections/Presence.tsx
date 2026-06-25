@@ -10,12 +10,13 @@ import { LOCATIONS } from "@/data/locations";
 
 const IndiaMap3D = dynamic(() => import("@/components/IndiaMap3D"), {
   ssr: false,
-  loading: () => <div className="india-map-3d india-map-3d--loading" />,
+  loading: () => null,
 });
 
 export function Presence() {
   const [activePinId, setActivePinId] = useState<string | null>(null);
   const [shouldLoadMap, setShouldLoadMap] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
   const mapRegionRef = useRef<HTMLDivElement>(null);
   const reduceMotion = Boolean(useReducedMotion());
 
@@ -34,7 +35,7 @@ export function Presence() {
         setShouldLoadMap(true);
         observer.disconnect();
       },
-      { rootMargin: "320px 0px", threshold: 0.01 },
+      { rootMargin: "900px 0px", threshold: 0.01 },
     );
 
     observer.observe(mapRegion);
@@ -139,19 +140,37 @@ export function Presence() {
         </div>
 
         <Reveal y={28} className="order-1 lg:order-2">
-          <div ref={mapRegionRef} data-map-control>
+          <div
+            ref={mapRegionRef}
+            data-map-control
+            className={`india-map-stage${mapReady ? " is-ready" : ""}`}
+          >
+            <div
+              className="india-map-loader"
+              role="status"
+              aria-live="polite"
+              aria-label="Preparing interactive map"
+            >
+              <div className="india-map-loader__orbit" aria-hidden>
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+              <p>Preparing interactive map</p>
+              <span>Building the 3D state view</span>
+            </div>
+
             {shouldLoadMap ? (
-              <IndiaMap3D
-                activePinId={activePinId}
-                onSelectPin={setActivePinId}
-                reduceMotion={reduceMotion}
-              />
-            ) : (
-              <div
-                className="india-map-3d india-map-3d--deferred"
-                aria-hidden
-              />
-            )}
+              <div className="india-map-stage__content">
+                <IndiaMap3D
+                  activePinId={activePinId}
+                  onSelectPin={setActivePinId}
+                  onReady={() => setMapReady(true)}
+                  reduceMotion={reduceMotion}
+                />
+              </div>
+            ) : null}
           </div>
         </Reveal>
       </div>

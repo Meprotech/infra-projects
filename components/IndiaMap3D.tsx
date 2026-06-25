@@ -33,6 +33,7 @@ const REST_LOOK_AT = new THREE.Vector3(0.08, -0.08, 0);
 interface IndiaMap3DProps {
   activePinId: string | null;
   onSelectPin: (pinId: string | null) => void;
+  onReady?: () => void;
   reduceMotion?: boolean;
 }
 
@@ -567,9 +568,22 @@ function MapScene({
   );
 }
 
+function SceneReady({ onReady }: { onReady?: () => void }) {
+  const announced = useRef(false);
+
+  useFrame(() => {
+    if (announced.current) return;
+    announced.current = true;
+    requestAnimationFrame(() => onReady?.());
+  });
+
+  return null;
+}
+
 export default function IndiaMap3D({
   activePinId,
   onSelectPin,
+  onReady,
   reduceMotion = false,
 }: IndiaMap3DProps) {
   return (
@@ -600,6 +614,7 @@ export default function IndiaMap3D({
           onSelectPin={onSelectPin}
           reduceMotion={reduceMotion}
         />
+        <SceneReady onReady={onReady} />
       </Canvas>
       <div className="india-map-3d__fade" aria-hidden />
     </div>

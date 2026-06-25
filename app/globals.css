@@ -201,6 +201,134 @@ html.lenis body {
 }
 
 /* Scoped WebGL map used by the current Presence section. */
+.india-map-stage {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  aspect-ratio: 612 / 696;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.india-map-stage__content,
+.india-map-loader {
+  position: absolute;
+  inset: 0;
+}
+
+.india-map-stage__content {
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 1rem, 0) scale(0.975);
+  transition:
+    opacity 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 850ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.india-map-stage.is-ready .india-map-stage__content {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.india-map-loader {
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.35rem;
+  color: #48453e;
+  text-align: center;
+  transition:
+    opacity 350ms ease,
+    transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.india-map-stage.is-ready .india-map-loader {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+.india-map-loader__orbit {
+  position: relative;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid rgba(72, 69, 62, 0.16);
+  border-radius: 999px;
+  animation: india-map-loader-turn 2.4s linear infinite;
+}
+
+.india-map-loader__orbit::before,
+.india-map-loader__orbit::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(72, 69, 62, 0.13);
+  border-radius: 999px;
+}
+
+.india-map-loader__orbit::before {
+  inset: 0.65rem;
+}
+
+.india-map-loader__orbit::after {
+  inset: 1.55rem;
+  background: rgba(221, 217, 208, 0.44);
+}
+
+.india-map-loader__orbit span {
+  position: absolute;
+  z-index: 1;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 2px solid #f4f3ee;
+  border-radius: 999px;
+  background: #e91e58;
+  box-shadow: 0 2px 5px rgba(24, 23, 20, 0.24);
+}
+
+.india-map-loader__orbit span:nth-child(1) {
+  top: 0.7rem;
+  left: 2.45rem;
+}
+
+.india-map-loader__orbit span:nth-child(2) {
+  top: 2.25rem;
+  right: 0.55rem;
+}
+
+.india-map-loader__orbit span:nth-child(3) {
+  bottom: 0.6rem;
+  left: 2.1rem;
+}
+
+.india-map-loader__orbit span:nth-child(4) {
+  top: 2.65rem;
+  left: 0.5rem;
+}
+
+.india-map-loader p {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.india-map-loader > span {
+  color: #817b71;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes india-map-loader-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .india-map-3d {
   position: relative;
   width: 100%;
@@ -221,15 +349,6 @@ html.lenis body {
   width: 100% !important;
   height: 100% !important;
   outline: none;
-}
-
-.india-map-3d--loading {
-  background:
-    radial-gradient(circle at center, rgba(221, 217, 208, 0.7), transparent 54%);
-}
-
-.india-map-3d--deferred {
-  background: transparent;
 }
 
 .india-map-3d__fade {
@@ -410,6 +529,15 @@ html.lenis body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .india-map-loader__orbit {
+    animation: none;
+  }
+
+  .india-map-stage__content,
+  .india-map-loader {
+    transition-duration: 180ms;
+  }
+
   .hero-media,
   .hero-slide,
   .hero-eyebrow,
