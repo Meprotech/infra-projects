@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useReducedMotion } from "framer-motion";
-import Lenis from "lenis";
 
 /**
  * Buttery momentum scrolling (the CW / landing.love feel). Uses real scroll
@@ -15,24 +14,67 @@ export function SmoothScroll() {
 
   useEffect(() => {
     if (reduce) return;
-
-    // lerp-based smoothing tracks the wheel closely (snappy, not floaty).
-    const lenis = new Lenis({
-      lerp: 0.1,
-      wheelMultiplier: 1,
-      smoothWheel: true,
-    });
-
-    let raf = 0;
-    const loop = (time: number) => {
-      lenis.raf(time);
-      raf = requestAnimationFrame(loop);
+    const lowPower =
+      window.matchMedia("(pointer: coarse)").matches ||
+      (navigator.hardwareConcurrency ?? 8) <= 4;
+    if (lowPower) return;
+    const idleWindow = window as unknown as {
+      requestIdleCallback?: (
+        callback: () => void,
+        options?: { timeout: number },
+      ) => number;
+      cancelIdleCallback?: (id: number) => void;
     };
-    raf = requestAnimationFrame(loop);
+
+    let disposed = false;
+    let stop = () => {};
+
+    const initialize = async () => {
+      const { default: Lenis } = await import("lenis");
+      if (disposed) return;
+
+      const lenis = new Lenis({
+        lerp: 0.1,
+        wheelMultiplier: 1,
+        smoothWheel: true,
+      });
+
+      let raf = 0;
+      let running = true;
+      const loop = (time: number) => {
+        if (!running) return;
+        lenis.raf(time);
+        raf = requestAnimationFrame(loop);
+      };
+      const onVisibilityChange = () => {
+        running = !document.hidden;
+        if (!running) return;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(loop);
+      };
+
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      raf = requestAnimationFrame(loop);
+      stop = () => {
+        running = false;
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+        cancelAnimationFrame(raf);
+        lenis.destroy();
+      };
+    };
+
+    const idleId = idleWindow.requestIdleCallback
+      ? idleWindow.requestIdleCallback(initialize, { timeout: 1600 })
+        : window.setTimeout(initialize, 800);
 
     return () => {
-      cancelAnimationFrame(raf);
-      lenis.destroy();
+      disposed = true;
+      stop();
+      if (idleWindow.cancelIdleCallback) {
+        idleWindow.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
     };
   }, [reduce]);
 

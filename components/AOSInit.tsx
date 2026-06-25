@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import AOS from "aos";
 import "aos/dist/aos.css";
 
 /**
@@ -11,24 +10,51 @@ import "aos/dist/aos.css";
 export function AOSInit() {
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const idleWindow = window as unknown as {
+      requestIdleCallback?: (
+        callback: () => void,
+        options?: { timeout: number },
+      ) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
 
-    AOS.init({
-      duration: 400, // snappy
-      easing: "ease-out", // smooth + fast
-      once: true, // animate a single time
-      offset: 60, // trigger close to entering the viewport
-      delay: 0,
-      disable: reduce,
-    });
+    let cancelled = false;
+    let removeRefreshListeners = () => {};
 
-    // Recalculate positions once fonts/images settle (and after Lenis lays out).
-    const onLoad = () => AOS.refresh();
-    window.addEventListener("load", onLoad);
-    const t = window.setTimeout(() => AOS.refresh(), 600);
+    const initialize = async () => {
+      const { default: AOS } = await import("aos");
+      if (cancelled) return;
+
+      AOS.init({
+        duration: 400,
+        easing: "ease-out",
+        once: true,
+        offset: 60,
+        delay: 0,
+      });
+
+      const refresh = () => AOS.refresh();
+      const refreshTimer = window.setTimeout(refresh, 400);
+      window.addEventListener("load", refresh, { once: true });
+      removeRefreshListeners = () => {
+        window.clearTimeout(refreshTimer);
+        window.removeEventListener("load", refresh);
+      };
+    };
+
+    const idleId = idleWindow.requestIdleCallback
+      ? idleWindow.requestIdleCallback(initialize, { timeout: 1800 })
+        : window.setTimeout(initialize, 900);
 
     return () => {
-      window.removeEventListener("load", onLoad);
-      window.clearTimeout(t);
+      cancelled = true;
+      removeRefreshListeners();
+      if (idleWindow.cancelIdleCallback) {
+        idleWindow.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
     };
   }, []);
 

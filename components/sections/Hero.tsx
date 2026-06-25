@@ -1,14 +1,8 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { AnimatedText } from "@/components/ui/AnimatedText";
 
 export function Hero() {
-  const reduce = useReducedMotion();
-
   return (
     <section
       id="home"
@@ -17,12 +11,7 @@ export function Hero() {
       {/* Full-bleed background image. Swap public/hero.webp with the real photo
           (keep the same path/filename). */}
       <div className="absolute inset-x-0 -top-2 -bottom-8 z-0">
-        <motion.div
-          initial={reduce ? undefined : { scale: 1.08 }}
-          animate={reduce ? undefined : { scale: 1 }}
-          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 origin-bottom"
-        >
+        <div className="hero-media absolute inset-0 origin-bottom">
           <Image
             src="/hero-treatment-plant.webp"
             alt="Aerial view of a water treatment and supply plant"
@@ -31,7 +20,7 @@ export function Hero() {
             sizes="100vw"
             className="object-cover object-bottom"
           />
-        </motion.div>
+        </div>
 
         {/* Dark scrims so the centered white headline stays legible over a
             bright photo (and the bottom reads under the scroll cue). */}
@@ -40,26 +29,19 @@ export function Hero() {
       </div>
 
       <div className="section-shell relative z-10">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70"
-        >
+        <p className="hero-eyebrow text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
           Government-Approved Infrastructure
-        </motion.p>
+        </p>
 
         <h1 className="mx-auto mt-6 max-w-5xl font-heading text-4xl font-bold leading-[1.05] tracking-tight text-white drop-shadow-sm sm:text-6xl md:text-7xl xl:text-[5.5rem]">
-          <AnimatedText text="Building India's *Infrastructure*" delay={0.15} />
-          
+          <span className="hero-title-word">Building</span>{" "}
+          <span className="hero-title-word">India&apos;s</span>{" "}
+          <span className="hero-title-word font-serif font-medium italic">
+            Infrastructure
+          </span>
         </h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: reduce ? 0 : 1.1, duration: 0.7 }}
-          className="mt-9 flex flex-wrap items-center justify-center gap-4"
-        >
+        <div className="hero-actions mt-9 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/contact"
             className="boton-elegante inline-flex items-center justify-center tracking-wide"
@@ -72,28 +54,22 @@ export function Hero() {
           >
             Explore Projects
           </Link>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.a
+      <a
         href="#about"
         aria-label="Scroll to about section"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: reduce ? 0 : 1.4 }}
-        className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/70"
+        className="hero-scroll-indicator absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/70"
       >
         <span className="text-[10px] font-medium uppercase tracking-[0.3em]">
           Scroll
         </span>
-        <motion.span
-          animate={reduce ? undefined : { y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <span className="hero-scroll-chevron">
           <ChevronDown className="h-5 w-5 text-white" />
-        </motion.span>
-      </motion.a>
+        </span>
+      </a>
     </section>
   );
 }

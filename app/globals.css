@@ -537,10 +537,226 @@ html.lenis body {
   }
 }
 
+/* Scoped WebGL map used by the current Presence section. */
+.india-map-3d {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  aspect-ratio: 612 / 696;
+  margin-inline: auto;
+  overflow: hidden;
+  background: transparent;
+  cursor: default;
+}
+
+.india-map-3d.is-focused {
+  cursor: zoom-out;
+}
+
+.india-map-3d canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+}
+
+.india-map-3d--loading {
+  background:
+    radial-gradient(circle at center, rgba(221, 217, 208, 0.7), transparent 54%);
+}
+
+.india-map-3d--deferred {
+  background: transparent;
+}
+
+.india-map-3d__fade {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to right,
+      #f4f3ee 0%,
+      rgba(244, 243, 238, 0.7) 5%,
+      transparent 17%,
+      transparent 83%,
+      rgba(244, 243, 238, 0.7) 95%,
+      #f4f3ee 100%
+    ),
+    linear-gradient(
+      to bottom,
+      #f4f3ee 0%,
+      rgba(244, 243, 238, 0.58) 5%,
+      transparent 16%,
+      transparent 84%,
+      rgba(244, 243, 238, 0.62) 95%,
+      #f4f3ee 100%
+    );
+  opacity: 0;
+  transition: opacity 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.india-map-3d.is-focused .india-map-3d__fade {
+  opacity: 1;
+}
+
+.india-map-3d-label {
+  display: flex;
+  min-width: 4.25rem;
+  flex-direction: column;
+  gap: 0.12rem;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 0.42rem;
+  background: rgba(24, 23, 20, 0.92);
+  padding: 0.34rem 0.46rem;
+  color: #f4f3ee;
+  box-shadow:
+    0 8px 22px -12px rgba(24, 23, 20, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  font-family: var(--font-heading), system-ui, sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.india-map-3d-label--active {
+  animation: india-label-enter 440ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  transform-origin: left bottom;
+}
+
+@keyframes india-label-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem) scale(0.95);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.hero-media {
+  animation: hero-media-enter 1.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+  will-change: transform;
+}
+
+.hero-eyebrow,
+.hero-title-word,
+.hero-actions,
+.hero-scroll-indicator {
+  opacity: 0;
+  animation: hero-content-enter 600ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  will-change: transform, opacity;
+}
+
+.hero-title-word {
+  display: inline-block;
+}
+
+.hero-eyebrow {
+  animation-delay: 80ms;
+}
+
+.hero-title-word:nth-child(1) {
+  animation-delay: 160ms;
+}
+
+.hero-title-word:nth-child(2) {
+  animation-delay: 220ms;
+}
+
+.hero-title-word:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+.hero-actions {
+  animation-delay: 420ms;
+}
+
+.hero-scroll-indicator {
+  animation-delay: 620ms;
+}
+
+.hero-scroll-chevron {
+  animation: hero-scroll-chevron 1.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes hero-media-enter {
+  from {
+    transform: scale3d(1.045, 1.045, 1);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes hero-content-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.75rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-scroll-chevron {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 0.5rem, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media,
+  .hero-eyebrow,
+  .hero-title-word,
+  .hero-actions,
+  .hero-scroll-indicator,
+  .hero-scroll-chevron {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.india-map-3d-label strong {
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.india-map-3d-label span {
+  color: rgba(244, 243, 238, 0.62);
+  font-size: 0.45rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 639px) {
+  .india-map-3d {
+    max-width: 29rem;
+  }
+}
+
 html [data-aos="fade-up"] {
   transform: translate3d(0, 24px, 0);
 }
 
 html [data-aos="fade-down"] {
   transform: translate3d(0, -30px, 0);
+}
+
+/* Hash navigation should never leave an AOS-wrapped target invisible. */
+body:has(#presence:target) [data-aos]:has(#presence) {
+  opacity: 1 !important;
+  transform: none !important;
 }
