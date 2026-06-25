@@ -83,7 +83,9 @@ export function Presence() {
                   <span className="ml-auto text-xs text-concrete-400">
                     {location.type === "Head Office"
                       ? "Head Office"
-                      : location.state}
+                      : location.city === location.state
+                        ? "Site Office"
+                        : location.state}
                   </span>
                   </>
                 );

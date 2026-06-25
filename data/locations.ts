@@ -18,7 +18,14 @@ export interface OfficeLocation {
 }
 
 export const LOCATIONS: OfficeLocation[] = [
-  { id: "l1", city: "Surat", state: "Gujarat", type: "Head Office", x: 96, y: 381 },
+  {
+    id: "l1",
+    city: "Surat",
+    state: "Gujarat",
+    type: "Head Office",
+    x: 96,
+    y: 381,
+  },
   {
     id: "l2",
     city: "Dewas",
@@ -26,5 +33,21 @@ export const LOCATIONS: OfficeLocation[] = [
     type: "Regional Execution Office",
     x: 179,
     y: 359,
+  },
+  {
+    id: "l3",
+    city: "Punjab",
+    state: "Punjab",
+    type: "Site Office",
+    x: 151,
+    y: 152,
+  },
+  {
+    id: "l4",
+    city: "Bihar",
+    state: "Bihar",
+    type: "Site Office",
+    x: 369,
+    y: 275,
   },
 ];

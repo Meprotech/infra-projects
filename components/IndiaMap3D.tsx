@@ -17,7 +17,7 @@ import {
   useThree,
   type ThreeEvent,
 } from "@react-three/fiber";
-import { Html, Line } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
@@ -221,14 +221,9 @@ function LocationPin({
   const { invalidate } = useThree();
   const position = useMemo(() => mapPoint(location), [location]);
   const marker = useRef<THREE.Group>(null);
-  const glowMaterial = useRef<THREE.MeshStandardMaterial>(null);
-  const ringMaterial = useRef<THREE.MeshBasicMaterial>(null);
-  const light = useRef<THREE.PointLight>(null);
   const isHeadOffice = location.type === "Head Office";
   const [hovered, setHovered] = useState(false);
-  const labelPosition = isHeadOffice
-    ? ([-0.16, 0.31, 0.27] as const)
-    : ([0.2, 0.3, 0.27] as const);
+  const labelPosition = [0.17, 0.31, 0.27] as const;
   const handleSelect = (event: ThreeEvent<MouseEvent>) => {
     event.stopPropagation();
     onSelect?.();
@@ -255,10 +250,7 @@ function LocationPin({
   );
 
   useFrame((_, delta) => {
-    const targetScale = active ? 1.22 : hovered ? 1.08 : 1;
-    const targetEmissive = active ? 2.2 : hovered ? 1.25 : 0.8;
-    const targetRingOpacity = active ? 0.85 : hovered ? 0.7 : 0.58;
-    const targetLight = active ? 2.4 : isHeadOffice ? 0.9 : 0.65;
+    const targetScale = active ? 1.16 : hovered ? 1.07 : 1;
 
     if (marker.current) {
       const scale = THREE.MathUtils.damp(
@@ -269,41 +261,10 @@ function LocationPin({
       );
       marker.current.scale.setScalar(scale);
     }
-    if (glowMaterial.current) {
-      glowMaterial.current.emissiveIntensity = THREE.MathUtils.damp(
-        glowMaterial.current.emissiveIntensity,
-        targetEmissive,
-        8,
-        delta,
-      );
-    }
-    if (ringMaterial.current) {
-      ringMaterial.current.opacity = THREE.MathUtils.damp(
-        ringMaterial.current.opacity,
-        targetRingOpacity,
-        8,
-        delta,
-      );
-    }
-    if (light.current) {
-      light.current.intensity = THREE.MathUtils.damp(
-        light.current.intensity,
-        targetLight,
-        7,
-        delta,
-      );
-    }
 
     if (
       !marker.current ||
-      Math.abs(marker.current.scale.x - targetScale) > 0.002 ||
-      !glowMaterial.current ||
-      Math.abs(glowMaterial.current.emissiveIntensity - targetEmissive) >
-        0.002 ||
-      !ringMaterial.current ||
-      Math.abs(ringMaterial.current.opacity - targetRingOpacity) > 0.002 ||
-      !light.current ||
-      Math.abs(light.current.intensity - targetLight) > 0.002
+      Math.abs(marker.current.scale.x - targetScale) > 0.002
     ) {
       invalidate();
     }
@@ -327,41 +288,57 @@ function LocationPin({
           />
         </mesh>
 
-        <mesh position={[0, 0, 0.12]}>
-          <sphereGeometry args={[isHeadOffice ? 0.095 : 0.078, 24, 24]} />
-          <meshStandardMaterial
-            ref={glowMaterial}
-            color="#b4233b"
-            emissive="#8d1730"
-            emissiveIntensity={0.8}
-            roughness={0.34}
+        <mesh position={[0, 0.18, 0.15]}>
+          <sphereGeometry args={[isHeadOffice ? 0.105 : 0.09, 24, 24]} />
+          <meshPhysicalMaterial
+            color={active || hovered ? "#ff2866" : "#e91e58"}
+            roughness={0.22}
+            metalness={0.02}
+            clearcoat={0.9}
+            clearcoatRoughness={0.16}
           />
         </mesh>
 
-        <mesh position={[0, 0, 0.035]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.018, 0.018, 0.16, 12]} />
-          <meshStandardMaterial color="#2b2924" roughness={0.62} />
+        <mesh position={[-0.03, 0.215, 0.232]}>
+          <sphereGeometry args={[0.025, 12, 12]} />
+          <meshBasicMaterial color="#ff9fbd" />
         </mesh>
 
-        <mesh position={[0, 0, 0.015]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.14, 0.012, 12, 48]} />
-          <meshBasicMaterial
-            ref={ringMaterial}
-            color="#b4233b"
-            transparent
-            opacity={0.58}
-          />
+        <mesh position={[0, 0.085, 0.07]}>
+          <cylinderGeometry args={[0.014, 0.014, 0.16, 12]} />
+          <meshStandardMaterial color="#29262b" roughness={0.52} />
         </mesh>
+
+        <mesh position={[0, 0, 0.065]}>
+          <sphereGeometry args={[0.04, 16, 16]} />
+          <meshStandardMaterial color="#29262b" roughness={0.48} />
+        </mesh>
+
+        {active && (
+          <>
+            <mesh position={[0, 0, 0.025]}>
+              <ringGeometry args={[0.105, 0.12, 40]} />
+              <meshBasicMaterial
+                color="#777169"
+                transparent
+                opacity={0.62}
+                side={THREE.DoubleSide}
+                depthWrite={false}
+              />
+            </mesh>
+            <mesh position={[0, 0, 0.024]}>
+              <ringGeometry args={[0.16, 0.172, 40]} />
+              <meshBasicMaterial
+                color="#9a948a"
+                transparent
+                opacity={0.38}
+                side={THREE.DoubleSide}
+                depthWrite={false}
+              />
+            </mesh>
+          </>
+        )}
       </group>
-
-      <pointLight
-        ref={light}
-        color="#d74a61"
-        intensity={isHeadOffice ? 0.9 : 0.65}
-        distance={2}
-        decay={2}
-        position={[0, 0, 0.25]}
-      />
 
       <Html
         position={labelPosition}
@@ -374,7 +351,13 @@ function LocationPin({
         {active && (
           <div className="india-map-3d-label india-map-3d-label--active">
             <strong>{location.city}</strong>
-            <span>{isHeadOffice ? "HQ" : location.state}</span>
+            <span>
+              {isHeadOffice
+                ? "HQ"
+                : location.city === location.state
+                  ? "Site Office"
+                  : location.state}
+            </span>
           </div>
         )}
       </Html>
@@ -535,10 +518,6 @@ function MapScene({
   const activeLocation = LOCATIONS.find(
     (location) => location.id === activePinId,
   );
-  const connector = useMemo(
-    () => LOCATIONS.map((location) => mapPoint(location).add(new THREE.Vector3(0, 0, 0.035))),
-    [],
-  );
 
   return (
     <>
@@ -571,19 +550,6 @@ function MapScene({
         position={[0.12, -0.08, 0]}
       >
         <StateMeshes activeState={activeLocation?.state ?? null} />
-
-        {connector.length > 1 && (
-          <Line
-            points={connector}
-            color="#625e56"
-            lineWidth={1}
-            dashed
-            dashSize={0.09}
-            gapSize={0.07}
-            transparent
-            opacity={0.72}
-          />
-        )}
 
         {LOCATIONS.map((location) => (
           <LocationPin

@@ -1,8 +1,92 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const HERO_SLIDES = [
+  {
+    src: "/hero-treatment-plant.webp",
+    alt: "Aerial view of a water treatment and supply plant",
+    position: "object-bottom",
+  },
+  {
+    src: "/1.webp",
+    alt: "Kalathiya Infrastructure project",
+    position: "object-center",
+  },
+  {
+    src: "/2.webp",
+    alt: "Kalathiya Infrastructure construction project",
+    position: "object-center",
+  },
+  {
+    src: "/3.webp",
+    alt: "Kalathiya Infrastructure development work",
+    position: "object-center",
+  },
+  {
+    src: "/4.webp",
+    alt: "Kalathiya Infrastructure completed project",
+    position: "object-center",
+  },
+] as const;
 
 export function Hero() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [previousSlide, setPreviousSlide] = useState<number | null>(null);
+  const [slidesReady, setSlidesReady] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let cancelled = false;
+    const preloadTimer = window.setTimeout(async () => {
+      await Promise.all(
+        HERO_SLIDES.slice(1).map(
+          ({ src }) =>
+            new Promise<void>((resolve) => {
+              const image = new window.Image();
+              image.onload = () => resolve();
+              image.onerror = () => resolve();
+              image.src = src;
+            }),
+        ),
+      );
+      if (!cancelled) setSlidesReady(true);
+    }, 1200);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(preloadTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!slidesReady) return;
+
+    let clearPreviousTimer = 0;
+    const interval = window.setInterval(() => {
+      if (document.hidden) return;
+
+      setActiveSlide((current) => {
+        setPreviousSlide(current);
+        window.clearTimeout(clearPreviousTimer);
+        clearPreviousTimer = window.setTimeout(
+          () => setPreviousSlide(null),
+          1600,
+        );
+        return (current + 1) % HERO_SLIDES.length;
+      });
+    }, 5000);
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(clearPreviousTimer);
+    };
+  }, [slidesReady]);
+
   return (
     <section
       id="home"
@@ -12,13 +96,29 @@ export function Hero() {
           (keep the same path/filename). */}
       <div className="absolute inset-x-0 -top-2 -bottom-8 z-0">
         <div className="hero-media absolute inset-0 origin-bottom">
+          {previousSlide !== null && (
+            <Image
+              key={`previous-${previousSlide}`}
+              src={HERO_SLIDES[previousSlide].src}
+              alt=""
+              fill
+              unoptimized
+              sizes="100vw"
+              className={`hero-slide hero-slide--previous object-cover ${HERO_SLIDES[previousSlide].position}`}
+              aria-hidden
+            />
+          )}
           <Image
-            src="/hero-treatment-plant.webp"
-            alt="Aerial view of a water treatment and supply plant"
+            key={`active-${activeSlide}`}
+            src={HERO_SLIDES[activeSlide].src}
+            alt={HERO_SLIDES[activeSlide].alt}
             fill
-            priority
+            unoptimized
+            priority={activeSlide === 0}
             sizes="100vw"
-            className="object-cover object-bottom"
+            className={`hero-slide object-cover ${HERO_SLIDES[activeSlide].position} ${
+              previousSlide !== null ? "hero-slide--current" : ""
+            }`}
           />
         </div>
 

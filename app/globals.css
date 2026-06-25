@@ -643,6 +643,19 @@ html.lenis body {
   will-change: transform;
 }
 
+.hero-slide {
+  opacity: 1;
+  will-change: transform;
+}
+
+.hero-slide--current {
+  animation: hero-slide-enter 1500ms cubic-bezier(0.77, 0, 0.175, 1) both;
+}
+
+.hero-slide--previous {
+  animation: hero-slide-exit 1500ms cubic-bezier(0.77, 0, 0.175, 1) both;
+}
+
 .hero-eyebrow,
 .hero-title-word,
 .hero-actions,
@@ -694,6 +707,24 @@ html.lenis body {
   }
 }
 
+@keyframes hero-slide-enter {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-slide-exit {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
 @keyframes hero-content-enter {
   from {
     opacity: 0;
@@ -717,6 +748,7 @@ html.lenis body {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-media,
+  .hero-slide,
   .hero-eyebrow,
   .hero-title-word,
   .hero-actions,
