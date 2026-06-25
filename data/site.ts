@@ -27,10 +27,6 @@ export const SITE = {
           "House No. 25, Near Hanuman Temple, MR-3, Gautam Nagar, Balgrah Road, Dewas - 455001, Madhya Pradesh",
       },
     ],
-    phones: [
-      { label: "+91 99044 32736", href: "+919904432736" },
-      { label: "+91 99044 32366", href: "+919904432366" },
-    ],
     email: "kalathiya.infra@gmail.com",
   },
   social: [

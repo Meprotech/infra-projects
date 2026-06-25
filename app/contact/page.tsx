@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MapPin, Clock, type LucideIcon } from "lucide-react";
+import { Mail, MapPin, Clock, type LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -23,12 +23,6 @@ const DETAILS: ContactDetail[] = [
     icon: MapPin,
     label: address.label,
     value: address.value,
-  })),
-  ...SITE.contact.phones.map((phone, index) => ({
-    icon: Phone,
-    label: index === 0 ? "Primary Phone" : "Alternate Phone",
-    value: phone.label,
-    href: `tel:${phone.href}`,
   })),
   {
     icon: Mail,

@@ -110,15 +110,6 @@ export function MenuOverlay({
                 >
                   {SITE.contact.email}
                 </a>
-                {SITE.contact.phones.map((phone) => (
-                  <a
-                    key={phone.href}
-                    href={`tel:${phone.href}`}
-                    className="transition-colors hover:text-accent"
-                  >
-                    {phone.label}
-                  </a>
-                ))}
               </div>
               <div className="flex gap-5">
                 {SITE.social.map((s) => (

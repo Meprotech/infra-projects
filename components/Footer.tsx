@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { SITE } from "@/data/site";
 import { SERVICES } from "@/data/services";
 
@@ -90,14 +90,6 @@ export function Footer() {
                 {SITE.contact.email}
               </a>
             </li>
-            {SITE.contact.phones.map((phone) => (
-              <li key={phone.href} className="flex items-center gap-2.5">
-                <Phone className="h-4 w-4 shrink-0 text-accent" />
-                <a href={`tel:${phone.href}`} className="hover:text-accent">
-                  {phone.label}
-                </a>
-              </li>
-            ))}
           </ul>
         </div>
       </div>
