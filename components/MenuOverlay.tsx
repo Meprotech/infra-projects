@@ -101,7 +101,7 @@ export function MenuOverlay({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-10 flex flex-col gap-4 border-t border-concrete-700 pt-8 text-sm text-concrete-400 sm:flex-row sm:items-center sm:justify-between"
+              className="mt-10 border-t border-concrete-700 pt-8 text-sm text-concrete-400"
             >
               <div className="flex flex-col gap-1.5 sm:flex-row sm:gap-6">
                 <a
@@ -110,17 +110,6 @@ export function MenuOverlay({
                 >
                   {SITE.contact.email}
                 </a>
-              </div>
-              <div className="flex gap-5">
-                {SITE.social.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    className="transition-colors hover:text-accent"
-                  >
-                    {s.label}
-                  </a>
-                ))}
               </div>
             </motion.div>
           </nav>

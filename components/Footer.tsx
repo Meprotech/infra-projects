@@ -94,21 +94,10 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="section-shell relative flex flex-col items-center justify-between gap-3 border-t border-concrete-700/60 py-6 text-xs text-concrete-500 sm:flex-row">
+      <div className="section-shell relative flex justify-center border-t border-concrete-700/60 py-6 text-xs text-concrete-500">
         <p>
           © {new Date().getFullYear()} {SITE.name}. All rights reserved.
         </p>
-        <div className="flex items-center gap-5">
-          {SITE.social.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              className="transition-colors hover:text-accent"
-            >
-              {s.label}
-            </a>
-          ))}
-        </div>
       </div>
     </footer>
   );

@@ -29,11 +29,6 @@ export const SITE = {
     ],
     email: "kalathiya.infra@gmail.com",
   },
-  social: [
-    { label: "LinkedIn", href: "#" },
-    { label: "Instagram", href: "#" },
-    { label: "Facebook", href: "#" },
-  ],
   nav: [
     { label: "Home", href: "/#home" },
     { label: "About", href: "/#about" },
