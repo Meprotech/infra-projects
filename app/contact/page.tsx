@@ -40,6 +40,8 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Let's talk about your *project*."
         description="Share the details and our engineering team will respond with a clear next step."
+        backHref="/"
+        backLabel="Back to page"
       />
 
       <section className="bg-concrete-950 py-16 md:py-24">

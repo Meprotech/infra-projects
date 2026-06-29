@@ -15,6 +15,8 @@ export default function ProjectsPage() {
         eyebrow="Portfolio"
         title="Public works, *delivered*."
         description="Filter by state or sector to explore representative projects. All entries are placeholders pending real project data."
+        backHref="/#projects"
+        backLabel="Back to page"
       />
       <section className="bg-concrete-950 py-16 md:py-20">
         <div className="section-shell">

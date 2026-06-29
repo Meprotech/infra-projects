@@ -76,6 +76,76 @@
     @apply relative mx-auto w-full max-w-7xl px-5 sm:px-8;
   }
 
+  .page-back-cta {
+    display: flex;
+    width: fit-content;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border: none;
+    background: none;
+    color: rgb(var(--accent));
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .page-back-cta span {
+    padding-bottom: 18px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .page-back-cta svg {
+    width: 22px;
+    height: 22px;
+    margin-top: -0.25rem;
+    stroke-width: 2.25;
+    transform: translateX(6px);
+    transition: all 0.3s ease;
+  }
+
+  .page-back-cta:hover svg {
+    transform: translateX(0);
+  }
+
+  .page-back-cta:active svg {
+    transform: scale(0.9);
+  }
+
+  .page-back-cta .hover-underline-animation {
+    position: relative;
+    color: rgb(var(--accent));
+    padding-bottom: 18px;
+  }
+
+  .page-back-cta .hover-underline-animation::after {
+    content: "";
+    position: absolute;
+    width: 1.75rem;
+    height: 2px;
+    bottom: 0.2rem;
+    left: 0;
+    background-color: rgb(var(--accent));
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    transition:
+      width 0.25s ease-out,
+      transform 0.25s ease-out;
+  }
+
+  .page-back-cta:hover .hover-underline-animation::after {
+    width: 100%;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .page-back-cta:focus-visible {
+    outline: 3px solid rgb(var(--accent) / 0.35);
+    outline-offset: 4px;
+  }
+
   .text-gradient {
     @apply bg-gradient-to-br from-concrete-50 via-concrete-100 to-concrete-400 bg-clip-text text-transparent;
   }
