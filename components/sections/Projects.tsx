@@ -73,7 +73,8 @@ export function Projects() {
         <div className="mt-12 flex justify-center">
           {/* Sliding-fill button (adapted from Uiverse by nathAd17) */}
           <Link
-            href="/projects"
+            href="/projects#page-top"
+            scroll
             className="group relative isolate z-10 flex w-fit items-center gap-2 overflow-hidden rounded-full border-2 border-concrete-700 bg-concrete-900 px-6 py-3 text-sm font-semibold text-concrete-50 shadow-lg transition-all duration-700 before:absolute before:-left-full before:-z-10 before:aspect-square before:w-full before:rounded-full before:bg-accent before:transition-all before:duration-700 hover:text-concrete-950 hover:before:left-0 hover:before:scale-150 sm:text-base"
           >
             View All Projects
