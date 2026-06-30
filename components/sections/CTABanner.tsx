@@ -34,7 +34,7 @@ export function CTABanner() {
           <div className="mt-9">
             <Link href="/contact" className="conversation-button">
               <span className="conversation-button__text">
-                Start a Conversation
+                Contact Us
               </span>
             </Link>
           </div>

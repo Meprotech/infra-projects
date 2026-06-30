@@ -90,7 +90,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[calc(100svh+80px)] items-center justify-center overflow-hidden bg-black text-center"
+      className="relative min-h-[calc(100dvh+80px)] overflow-hidden bg-black text-center"
     >
       {/* Full-bleed automatic project slideshow. */}
       <div className="absolute inset-x-0 -top-2 -bottom-8 z-0">
@@ -127,32 +127,34 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/45" />
       </div>
 
-      <div className="section-shell relative z-10">
-        <p className="hero-eyebrow text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-          Government-Approved Infrastructure
-        </p>
+      <div className="section-shell absolute inset-x-0 top-0 z-10 flex h-[100dvh] items-center justify-center">
+        <div className="mx-auto flex max-w-5xl flex-col items-center">
+          <p className="hero-eyebrow text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+            Government-Approved Infrastructure
+          </p>
 
-        <h1 className="mx-auto mt-6 max-w-5xl font-heading text-4xl font-bold leading-[1.05] tracking-tight text-white drop-shadow-sm sm:text-6xl md:text-7xl xl:text-[5.5rem]">
-          <span className="hero-title-word">Building</span>{" "}
-          <span className="hero-title-word">India&apos;s</span>{" "}
-          <span className="hero-title-word font-serif font-medium italic">
-            Infrastructure
-          </span>
-        </h1>
+          <h1 className="mx-auto mt-6 max-w-5xl font-heading text-4xl font-bold leading-[1.05] tracking-tight text-white drop-shadow-sm sm:text-6xl md:text-7xl xl:text-[5.5rem]">
+            <span className="hero-title-word">Building</span>{" "}
+            <span className="hero-title-word">India&apos;s</span>{" "}
+            <span className="hero-title-word font-serif font-medium italic">
+              Infrastructure
+            </span>
+          </h1>
 
-        <div className="hero-actions mt-9 flex flex-wrap items-center justify-center gap-4">
-          <Link
-            href="/contact"
-            className="boton-elegante inline-flex items-center justify-center tracking-wide"
-          >
-            Get in Touch
-          </Link>
-          <Link
-            href="/#projects"
-            className="boton-elegante boton-elegante--transparent inline-flex items-center justify-center tracking-wide"
-          >
-            Explore Projects
-          </Link>
+          <div className="hero-actions mt-9 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="boton-elegante inline-flex items-center justify-center tracking-wide"
+            >
+              Get in Touch
+            </Link>
+            <Link
+              href="/#projects"
+              className="boton-elegante boton-elegante--transparent inline-flex items-center justify-center tracking-wide"
+            >
+              Explore Projects
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -160,7 +162,7 @@ export function Hero() {
       <a
         href="#about"
         aria-label="Scroll to about section"
-        className="hero-scroll-indicator absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/70"
+        className="hero-scroll-indicator absolute inset-x-0 bottom-7 z-10 mx-auto flex w-fit flex-col items-center gap-2 text-center text-white/70"
       >
         <span className="text-[10px] font-medium uppercase tracking-[0.3em]">
           Scroll
