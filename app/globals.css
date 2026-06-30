@@ -193,6 +193,30 @@
     outline: 3px solid rgb(var(--accent) / 0.45);
     outline-offset: 4px;
   }
+
+  .contact-form-control__char {
+    display: inline-block;
+    min-width: 5px;
+    color: #181714;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    transition:
+      color 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+      transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .contact-form-control :is(input, textarea) {
+    color: #100f0d;
+    caret-color: #100f0d;
+  }
+
+  .contact-form-control :is(input, textarea):focus + label span,
+  .contact-form-control :is(input, textarea):not(:placeholder-shown) + label span {
+    color: rgb(var(--accent));
+    transform: translateY(-2rem);
+  }
 }
 
 .hairline-t {

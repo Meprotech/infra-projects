@@ -14,6 +14,29 @@ const FIELDS = [
   { name: "subject", label: "Subject", type: "text", required: false },
 ] as const;
 
+const floatingLabelSpan =
+  "contact-form-control__char";
+
+function FloatingLabel({ htmlFor, label }: { htmlFor: string; label: string }) {
+  return (
+    <label htmlFor={htmlFor} className="pointer-events-none absolute left-0 top-3.5">
+      {label.split("").map((char, index) => (
+        <span
+          key={`${char}-${index}`}
+          className={floatingLabelSpan}
+          style={{ transitionDelay: `${index * 18}ms` }}
+        >
+          {char === " " ? "\u00a0" : char}
+        </span>
+      ))}
+    </label>
+  );
+}
+
+function keepDigitsOnly(e: React.FormEvent<HTMLInputElement>) {
+  e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "");
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -42,7 +65,7 @@ export function ContactForm() {
         return;
       }
 
-      setServerMsg(json.message ?? "Thanks — we'll be in touch.");
+      setServerMsg(json.message ?? "Thanks - we'll be in touch.");
       setStatus("success");
       form.reset();
     } catch {
@@ -79,53 +102,52 @@ export function ContactForm() {
       className="rounded-2xl border border-concrete-700 bg-concrete-900/60 p-6 sm:p-8"
       noValidate
     >
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2">
         {FIELDS.map((f) => (
           <div key={f.name} className={cn(f.name === "subject" && "sm:col-span-2")}>
-            <label
-              htmlFor={f.name}
-              className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-concrete-400"
-            >
-              {f.label}
-              {f.required && <span className="text-accent"> *</span>}
-            </label>
-            <input
-              id={f.name}
-              name={f.name}
-              type={f.type}
-              required={f.required}
-              className={cn(
-                "w-full rounded-lg border bg-concrete-950 px-4 py-3 text-sm text-concrete-50 outline-none transition-colors placeholder:text-concrete-600 focus:border-accent",
-                errors[f.name] ? "border-red-500/60" : "border-concrete-700",
-              )}
-              placeholder={f.label}
-            />
+            <div className="contact-form-control relative">
+              <input
+                id={f.name}
+                name={f.name}
+                type={f.type}
+                inputMode={f.name === "phone" ? "numeric" : undefined}
+                pattern={f.name === "phone" ? "[0-9]*" : undefined}
+                onInput={f.name === "phone" ? keepDigitsOnly : undefined}
+                required={f.required}
+                className={cn(
+                  "block w-full border-0 border-b-2 bg-transparent px-0 pb-2.5 pt-3.5 text-base text-concrete-50 outline-none transition-colors placeholder:text-transparent focus:border-accent",
+                  errors[f.name] ? "border-red-500/70" : "border-concrete-500/70",
+                )}
+                placeholder=" "
+              />
+              <FloatingLabel
+                htmlFor={f.name}
+                label={`${f.label}${f.required ? " *" : ""}`}
+              />
+            </div>
             {errors[f.name] && (
-              <p className="mt-1 text-xs text-red-600">{errors[f.name]}</p>
+              <p className="mt-2 text-xs text-red-500">{errors[f.name]}</p>
             )}
           </div>
         ))}
 
         <div className="sm:col-span-2">
-          <label
-            htmlFor="message"
-            className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-concrete-400"
-          >
-            Message<span className="text-accent"> *</span>
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            required
-            rows={5}
-            className={cn(
-              "w-full resize-none rounded-lg border bg-concrete-950 px-4 py-3 text-sm text-concrete-50 outline-none transition-colors placeholder:text-concrete-600 focus:border-accent",
-              errors.message ? "border-red-500/60" : "border-concrete-700",
-            )}
-            placeholder="Tell us about your project…"
-          />
+          <div className="contact-form-control relative">
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows={5}
+              className={cn(
+                "block w-full resize-none border-0 border-b-2 bg-transparent px-0 pb-2.5 pt-3.5 text-base text-concrete-50 outline-none transition-colors placeholder:text-transparent focus:border-accent",
+                errors.message ? "border-red-500/70" : "border-concrete-500/70",
+              )}
+              placeholder=" "
+            />
+            <FloatingLabel htmlFor="message" label="Message *" />
+          </div>
           {errors.message && (
-            <p className="mt-1 text-xs text-red-600">{errors.message}</p>
+            <p className="mt-2 text-xs text-red-500">{errors.message}</p>
           )}
         </div>
       </div>
@@ -140,12 +162,12 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-ink transition-all hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-ink transition-all hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
       >
         {status === "submitting" ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            Sending…
+            Sending...
           </>
         ) : (
           <>
