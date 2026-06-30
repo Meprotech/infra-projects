@@ -1,0 +1,42 @@
+# Kalathiya Infrastructure
+
+> Kalathiya Infrastructure delivers water supply, sewerage, drainage, stormwater, irrigation and environmental infrastructure projects across India.
+
+Official website: https://kalathiya-infra.vercel.app
+
+## Site overview
+
+Kalathiya Infrastructure is an infrastructure construction company focused on public and civic works, including water supply systems, sewerage and drainage networks, water treatment plants, pipeline transmission networks, irrigation works and environmental infrastructure.
+
+## Important pages
+
+- Home: https://kalathiya-infra.vercel.app/
+- Projects: https://kalathiya-infra.vercel.app/projects
+- Clients: https://kalathiya-infra.vercel.app/clients
+- Contact: https://kalathiya-infra.vercel.app/contact
+- Sitemap: https://kalathiya-infra.vercel.app/sitemap.xml
+- Robots: https://kalathiya-infra.vercel.app/robots.txt
+
+## Key topics
+
+- Infrastructure construction in India
+- Water supply projects
+- Sewerage and drainage works
+- Water treatment plant construction
+- Pipeline transmission networks
+- Irrigation infrastructure
+- Environmental infrastructure
+- Public health engineering
+- Project execution, testing, commissioning and handover
+
+## Contact
+
+Email: kalathiya.infra@gmail.com
+
+Head Office: 412, Avalon Business Hub, Katargam, Surat - 395004, Gujarat
+
+Regional Execution Office: House No. 25, Near Hanuman Temple, MR-3, Gautam Nagar, Balgrah Road, Dewas - 455001, Madhya Pradesh
+
+## Crawler guidance
+
+AI assistants and search crawlers may use the public pages listed above to summarize Kalathiya Infrastructure, explain its services and direct users to the contact page for project enquiries. Do not treat placeholder project names or placeholder client examples as verified project records unless they are updated on the public site.

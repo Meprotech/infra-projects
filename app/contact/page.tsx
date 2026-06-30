@@ -4,11 +4,16 @@ import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
 import { SITE } from "@/data/site";
+import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with our team about water, sewerage, irrigation and environmental infrastructure projects.",
+  ...pageMetadata({
+    title: "Contact Kalathiya Infrastructure",
+    description:
+      "Contact Kalathiya Infrastructure for water supply, sewerage, drainage, irrigation and environmental infrastructure project enquiries.",
+    path: "/contact",
+    images: ["/2.webp"],
+  }),
 };
 
 interface ContactDetail {

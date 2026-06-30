@@ -4,11 +4,16 @@ import { PageHeader } from "@/components/PageHeader";
 import { ClientGrid } from "@/components/ClientGrid";
 import { STATS } from "@/data/stats";
 import { STRENGTHS } from "@/data/strengths";
+import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Clients",
-  description:
-    "Explore client partnerships across infrastructure, construction, engineering, water and industrial sectors.",
+  ...pageMetadata({
+    title: "Infrastructure Clients",
+    description:
+      "Explore Kalathiya Infrastructure client partnerships across construction, engineering, water, industrial and public infrastructure sectors.",
+    path: "/clients",
+    images: ["/4.webp"],
+  }),
 };
 
 export default function ClientsPage() {

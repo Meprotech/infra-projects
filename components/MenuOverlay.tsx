@@ -37,11 +37,12 @@ export function MenuOverlay({
     <AnimatePresence>
       {open && (
         <motion.div
+          data-lenis-prevent
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: EASE }}
-          className="fixed inset-0 z-[80] overflow-y-auto bg-concrete-900"
+          className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-concrete-900 [touch-action:pan-y]"
         >
           {/* overlay header */}
           <div className="section-shell relative flex h-16 items-center justify-between md:h-20">

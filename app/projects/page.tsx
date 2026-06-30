@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { ProjectsExplorer } from "@/components/ProjectsExplorer";
+import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Projects",
-  description:
-    "Explore our portfolio of water supply, sewerage, drainage, irrigation and environmental infrastructure projects across India.",
+  ...pageMetadata({
+    title: "Infrastructure Projects",
+    description:
+      "Explore water supply, sewerage, drainage, irrigation and environmental infrastructure projects delivered across India.",
+    path: "/projects",
+    images: ["/hero-treatment-plant.webp"],
+  }),
 };
 
 export default function ProjectsPage() {
