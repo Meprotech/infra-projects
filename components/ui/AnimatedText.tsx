@@ -50,6 +50,8 @@ export function AnimatedText({
 }: AnimatedTextProps) {
   const reduce = useReducedMotion();
   const tokens = tokenize(text);
+  const needsTrailingSpace = (index: number) =>
+    index < tokens.length - 1 && !/^[.,!?;:)]/.test(tokens[index + 1].word);
 
   const container = {
     hidden: {},
@@ -79,22 +81,23 @@ export function AnimatedText({
       {...animProps}
     >
       {tokens.map((t, i) => (
-        <span
-          key={i}
-          // overflow-y hides the rise; overflow-x stays visible so italic
-          // glyph overhang isn't clipped.
-          className="inline-block overflow-x-visible overflow-y-hidden align-bottom"
-          style={{ marginRight: i < tokens.length - 1 ? "0.25em" : 0 }}
-        >
-          <motion.span
-            variants={word}
-            className={cn(
-              "inline-block",
-              t.italic && "font-serif font-medium italic",
-            )}
+        <span key={i}>
+          <span
+            // overflow-y hides the rise; overflow-x stays visible so italic
+            // glyph overhang isn't clipped.
+            className="inline-block overflow-x-visible overflow-y-hidden align-bottom"
           >
-            {t.word}
-          </motion.span>
+            <motion.span
+              variants={word}
+              className={cn(
+                "inline-block",
+                t.italic && "font-serif font-medium italic",
+              )}
+            >
+              {t.word}
+            </motion.span>
+          </span>
+          {needsTrailingSpace(i) ? " " : null}
         </span>
       ))}
     </motion.span>
