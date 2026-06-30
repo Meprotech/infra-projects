@@ -101,7 +101,6 @@ export function Hero() {
               src={HERO_SLIDES[previousSlide].src}
               alt=""
               fill
-              unoptimized
               sizes="100vw"
               className={`hero-slide hero-slide--previous object-cover ${HERO_SLIDES[previousSlide].position}`}
               aria-hidden
@@ -112,7 +111,6 @@ export function Hero() {
             src={HERO_SLIDES[activeSlide].src}
             alt={HERO_SLIDES[activeSlide].alt}
             fill
-            unoptimized
             priority={activeSlide === 0}
             sizes="100vw"
             className={`hero-slide object-cover ${HERO_SLIDES[activeSlide].position} ${

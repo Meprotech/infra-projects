@@ -164,25 +164,29 @@ function StaticJourney() {
 
 export function ScrollJourney() {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [mobile, setMobile] = useState(false);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
   useEffect(() => {
     setMounted(true);
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia("(max-width: 768px), (pointer: coarse)");
     const onChange = () => setMobile(mq.matches);
     onChange();
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  if (mounted && reduce) return <StaticJourney />;
+  if (!mounted || reduce || mobile) return <StaticJourney />;
+
+  return <InteractiveJourney />;
+}
+
+function InteractiveJourney() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
 
   return (
     <section
@@ -190,7 +194,7 @@ export function ScrollJourney() {
       className="relative bg-concrete-950"
       // inline position guarantees a non-static scroll container even before
       // the CSS class loads (avoids a transient useScroll warning).
-      style={{ position: "relative", height: mobile ? "340vh" : "420vh" }}
+      style={{ position: "relative", height: "420vh" }}
       aria-label="How we build — project showcase"
     >
       <div className="sticky top-0 h-screen overflow-hidden border-y border-concrete-800">
